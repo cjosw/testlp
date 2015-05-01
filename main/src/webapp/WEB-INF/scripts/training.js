@@ -8,7 +8,7 @@ function trainingLoadedSuccess(result, status, xhr) {
     var sorted = result.sort(compareTrainingByCategoryName);
     var progress = updateLessonCountsOnTrainingPlans(sorted);
     learning_plan.initial_plan(sorted);
-    learning_plan.progress(progress);
+    learning_plan.progress(""+progress+"%");
     learning_plan.category_plan(filterPlanIntoCategories(sorted));
 }
 

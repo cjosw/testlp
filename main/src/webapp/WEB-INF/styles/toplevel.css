@@ -1,0 +1,55 @@
+.learning_plan_logo * {
+    background-color: #202F40;
+}
+.learning_plan_logo_bar {
+    height: 90px;
+}
+.learning_plan_logo_content {
+    height: 100%;
+}
+.learning_plan_heading * {
+    background-color: #2C3E51;
+    color: white;
+}
+.learning_plan_heading_bar {
+    height: 112px;
+}
+.learning_plan_heading_content {
+    height: 100%;
+}
+.learning_plan_heading_image_container {
+    padding-top: 20px;
+}
+.learning_plan_heading_text_container {
+    padding-top: 20px;
+    font-size: x-large;
+}
+.image-cropper {
+    width: 72px;
+    height: 72px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
+img.learning_plan_heading_content {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+.progress-bar {
+    background-color: #10A903;
+    height: 10px;
+}
+.progress-bar.learning_plan_progress_bar_background {
+    background-color: #415162;
+}
+.learning_plan_progress_bar_container {
+    height: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
