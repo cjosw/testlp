@@ -19,7 +19,7 @@
 
 <div class="container-fluid">
 
-    <div class="lp_logo lp_logo_bar">
+    <div class="row lp_logo lp_logo_bar">
         <div class="col-md-1 lp_logo_content">
         </div>
         <div class="col-md-2 lp_logo_content">
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="lp_heading lp_heading_bar">
+    <div class="row lp_heading lp_heading_bar">
         <div class="col-md-1 lp_heading_content">
         </div>
         <div class="col-md-1 lp_heading_content lp_heading_image_container">
@@ -69,6 +69,63 @@
         <span data-bind="text: learning_plan.errorMessage"/>
     </div>
 
+    <!-- ko foreach: learning_plan.category_plan -->
+    <div class="lp_category_section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- ko if: categoryName -->
+                    <b><span data-bind="text: categoryName"></span></b>
+                    <!-- /ko -->
+                    <!-- ko if: !categoryName -->
+                    <b>[ No Category specified ]</b>
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="lp_course_section">
+                    <tr class="rowxx">
+                        <!-- ko foreach: training_data_list -->
+                        <td class="col-md-2" stylexx="width:15%">
+                            <div>
+                                <table class="col-md-1x" stylexx="width:100%">
+                                    <tr>
+                                        <td>
+                                            <b><span data-bind="text: Course.Summary"></span></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <!-- ko if: completed -->
+                                                Completed
+                                            <!-- /ko -->
+                                            <!-- ko if: !completed -->
+                                                <!-- ko if: numCompleted == 0 -->
+                                                    <span data-bind="text: LessonUsers.length"></span> Lessons
+                                                <!-- /ko -->
+                                                <!-- ko if: numCompleted != 0 -->
+                                                    <span data-bind="text: numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete
+                                                <!-- /ko -->
+                                            <!-- /ko -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Button</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <!-- /ko -->
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <div>
     <ul data-bind="foreach: learning_plan.category_plan">
         <li>
             Category: <span data-bind="text: categoryName"></span>
@@ -85,6 +142,7 @@
             </ul>
         </li>
     </ul>
+    </div>
 
     <script type="text/javascript">
         startup()

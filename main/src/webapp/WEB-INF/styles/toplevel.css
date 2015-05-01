@@ -56,3 +56,11 @@ img.lp_heading_content {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.lp_category_section * {
+    background-color: #ECEFF4;
+}
+.lp_course_section {
+    width: 100%;
+    text-align: center;
+}
