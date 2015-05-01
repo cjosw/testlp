@@ -8,7 +8,7 @@ function invokeAjax(url, successFn) {
             return function(jqXHR, textStatus, errorThrown) {
                 msg = "Failed to retrieve URL: " + url + "; error: " + jqXHR.statusText;
                 console.log(msg);
-                training_plan.errorMessage(msg);
+                learning_plan.errorMessage(msg);
             };
         })(this)
     });

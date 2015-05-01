@@ -1,7 +1,9 @@
 // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
 function LearningPlanViewModel() {
     this.user = ko.observable()
-    this.training = ko.observable()
+    this.progress = ko.observable()
+    this.initial_plan = ko.observable()
+    this.category_plan = ko.observable()
     this.errorMessage = ko.observable()
 }
 

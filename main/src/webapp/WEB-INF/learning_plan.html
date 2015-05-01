@@ -26,7 +26,10 @@
     <div data-bind="with: learning_plan.user">
         <span>Hi, <span data-bind="text: FirstName"></span></span>
     </div>
-    <ul data-bind="foreach: learning_plan.training">
+    <div>
+        <span>Progress: <span data-bind="text: learning_plan.progress"></span>%</span>
+    </div>
+    <ul data-bind="foreach: learning_plan.category_plan">
         <li>
             Category: <span data-bind="text: categoryName"></span>
             <ul data-bind="foreach: training_data_list">
