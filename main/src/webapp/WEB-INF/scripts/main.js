@@ -1,0 +1,17 @@
+// This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
+function LearningPlanViewModel() {
+    this.user = ko.observable()
+    this.training = ko.observable()
+    this.errorMessage = ko.observable()
+}
+
+function startup() {
+    rootUrl = 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/'
+    userId = '80380afd-42fa-4baa-a8c1-66ff2c8799d7'
+
+    learning_plan = new LearningPlanViewModel()
+    ko.applyBindings(learning_plan)
+
+    loadUser(userId)
+    loadTrainingPlan(userId)
+}
