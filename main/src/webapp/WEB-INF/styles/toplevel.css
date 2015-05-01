@@ -1,28 +1,31 @@
-.learning_plan_logo * {
+.lp_logo * {
     background-color: #202F40;
 }
-.learning_plan_logo_bar {
+.lp_logo_bar {
     height: 90px;
 }
-.learning_plan_logo_content {
+.lp_logo_content {
     height: 100%;
 }
-.learning_plan_heading * {
+.lp_heading * {
     background-color: #2C3E51;
     color: white;
 }
-.learning_plan_heading_bar {
+.lp_heading_bar {
     height: 112px;
 }
-.learning_plan_heading_content {
+.lp_heading_content {
     height: 100%;
 }
-.learning_plan_heading_image_container {
+.lp_heading_image_container {
     padding-top: 20px;
 }
-.learning_plan_heading_text_container {
+.lp_heading_text_container {
     padding-top: 20px;
-    font-size: x-large;
+    font-size: large;
+}
+.lp_heading_summary_container {
+    font-size: small;
 }
 .image-cropper {
     width: 72px;
@@ -35,7 +38,7 @@
     -o-border-radius: 50%;
     border-radius: 50%;
 }
-img.learning_plan_heading_content {
+img.lp_heading_content {
     display: inline;
     margin: 0 auto;
     height: 100%;
@@ -45,10 +48,10 @@ img.learning_plan_heading_content {
     background-color: #10A903;
     height: 10px;
 }
-.progress-bar.learning_plan_progress_bar_background {
+.progress-bar.lp_progress_bar_background {
     background-color: #415162;
 }
-.learning_plan_progress_bar_container {
+.lp_progress_bar_container {
     height: 10px;
     margin-top: 5px;
     margin-bottom: 5px;

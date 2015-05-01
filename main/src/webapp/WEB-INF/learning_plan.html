@@ -19,34 +19,34 @@
 
 <div class="container-fluid">
 
-    <div class="learning_plan_logo learning_plan_logo_bar">
-        <div class="col-md-1 learning_plan_logo_content">
+    <div class="lp_logo lp_logo_bar">
+        <div class="col-md-1 lp_logo_content">
         </div>
-        <div class="col-md-2 learning_plan_logo_content">
+        <div class="col-md-2 lp_logo_content">
             <img src="images/kallidus_logo_from_concept.png">
         </div>
-        <div class="col-md-9 learning_plan_logo_content">
+        <div class="col-md-9 lp_logo_content">
         </div>
     </div>
 
-    <div class="learning_plan_heading learning_plan_heading_bar">
-        <div class="col-md-1 learning_plan_heading_content">
+    <div class="lp_heading lp_heading_bar">
+        <div class="col-md-1 lp_heading_content">
         </div>
-        <div class="col-md-1 learning_plan_heading_content learning_plan_heading_image_container">
-            <div class="learning_plan_heading_cropper image-cropper">
-                <img class="learning_plan_heading_content" src="images/ConorFaceSmall.jpg">
+        <div class="col-md-1 lp_heading_content lp_heading_image_container">
+            <div class="lp_heading_cropper image-cropper">
+                <img class="lp_heading_content" src="images/ConorFaceSmall.jpg">
             </div>
         </div>
-        <div class="col-md-2 learning_plan_heading_content">
+        <div class="col-md-2 lp_heading_content">
             <table>
                 <tr>
-                    <div class="learning_plan_heading_text_container" data-bind="with: learning_plan.user">
+                    <div class="lp_heading_text_container" data-bind="with: learning_plan.user">
                         <span>Hi, <span data-bind="text: FirstName"></span></span>
                     </div>
                 </tr>
                 <tr>
-                    <div class="progress learning_plan_progress_bar_container">
-                        <div class="progress-bar learning_plan_progress_bar_background" role="progressbar"
+                    <div class="progress lp_progress_bar_container">
+                        <div class="progress-bar lp_progress_bar_background" role="progressbar"
                              aria-valuemin="0" aria-valuemax="100" style="width:100%">
                             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
                                  data-bind="style: { 'width': learning_plan.progress() }">
@@ -55,13 +55,13 @@
                     </div>
                 </tr>
                 <tr>
-                    <span>
+                    <span class="lp_heading_summary_container">
                         Level 1<span class="pull-right"><span data-bind="text: learning_plan.progress"></span></span>
                     </span>
                 </tr>
             </table>
         </div>
-        <div class="col-md-8 learning_plan_heading_content">
+        <div class="col-md-8 lp_heading_content">
         </div>
     </div>
 
