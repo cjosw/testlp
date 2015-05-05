@@ -17,7 +17,7 @@
 <script type='text/javascript' src='scripts/user.js'></script>
 <script type='text/javascript' src='scripts/utils.js'></script>
 
-<div class="container-fluid">
+<div class="container-fluid lp_body">
 
     <div class="row lp_logo lp_logo_bar">
         <div class="col-md-1 lp_logo_content">
@@ -73,7 +73,7 @@
     <div class="lp_category_section">
         <div class="row">
             <div class="col-md-12">
-                <div class="col-md-12">
+                <div class="col-md-12 lp_category_section_header">
                     <!-- ko if: categoryName -->
                     <b><span data-bind="text: categoryName"></span></b>
                     <!-- /ko -->
@@ -86,14 +86,20 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="lp_course_section">
-                    <tr class="rowxx">
+                    <tr>
                         <!-- ko foreach: training_data_list -->
-                        <td class="col-md-2" stylexx="width:15%">
-                            <div>
-                                <table class="col-md-1x" stylexx="width:100%">
+                        <td class="col-md-2">
+                                <table class="lp_course_table">
                                     <tr>
                                         <td>
-                                            <b><span data-bind="text: Course.Summary"></span></b>
+                                            <img class="lp_course_summary_image" src="images/ExampleCourseImageContentMarketing.png">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="lp_course_summary_name">
+                                                <b><span data-bind="text: Course.Summary"></span></b>
+                                            </span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -115,7 +121,6 @@
                                         <td>Button</td>
                                     </tr>
                                 </table>
-                            </div>
                         </td>
                         <!-- /ko -->
                     </tr>

@@ -1,3 +1,7 @@
+.lp_body {
+    font-family: Arial;
+}
+
 .lp_logo * {
     background-color: #202F40;
 }
@@ -60,7 +64,24 @@ img.lp_heading_content {
 .lp_category_section * {
     background-color: #ECEFF4;
 }
+.lp_category_section_header {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
 .lp_course_section {
     width: 100%;
+}
+.lp_course_table {
     text-align: center;
+}
+.lp_course_summary_image {
+    max-height: 150px;
+    max-width: 100px;
+}
+.lp_course_summary_name {
+    font-size: small;
+    margin-top: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
