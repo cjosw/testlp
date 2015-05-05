@@ -13,9 +13,11 @@
 <script type='text/javascript' src='scripts/lib/jquery/jquery-1.11.0.min.js'></script>
 <script type='text/javascript' src='scripts/lib/knockout/knockout-3.2.0.min.js'></script>
 <script type='text/javascript' src='scripts/main.js'></script>
+<script type='text/javascript' src='scripts/knockout-customisations.js'></script>
 <script type='text/javascript' src='scripts/training.js'></script>
 <script type='text/javascript' src='scripts/user.js'></script>
 <script type='text/javascript' src='scripts/utils.js'></script>
+<script type='text/javascript' src='scripts/testdata.js'></script>
 
 <div class="container-fluid lp_body">
 
@@ -83,16 +85,20 @@
                 </div>
             </div>
         </div>
+        <!-- ko foreach: training_data_rows -->
         <div class="row">
             <div class="col-md-12">
                 <table class="lp_course_section">
                     <tr>
-                        <!-- ko foreach: training_data_list -->
+                        <!-- ko foreach: $data -->
                         <td class="col-md-2">
+                            <!-- ko if: blank -->
+                            <!-- /ko -->
+                            <!-- ko if: !blank -->
                                 <table class="lp_course_table">
                                     <tr>
                                         <td>
-                                            <img class="lp_course_summary_image" src="images/ExampleCourseImageContentMarketing.png">
+                                            <img class="lp_course_summary_image" data-bind="src: imageName">
                                         </td>
                                     </tr>
                                     <tr>
@@ -121,12 +127,14 @@
                                         <td>Button</td>
                                     </tr>
                                 </table>
+                            <!-- /ko -->
                         </td>
                         <!-- /ko -->
                     </tr>
                 </table>
             </div>
         </div>
+        <!-- /ko -->
     </div>
     <!-- /ko -->
 
@@ -134,14 +142,19 @@
     <ul data-bind="foreach: learning_plan.category_plan">
         <li>
             Category: <span data-bind="text: categoryName"></span>
-            <ul data-bind="foreach: training_data_list">
+            <ul data-bind="foreach: training_data_rows">
                 <li>
+                    Row: <span data-bind="text: $index"></span>
+                    <ul data-bind="foreach: $data">
+                        <li>
                     Course title: <span data-bind="text: Course.Summary"></span>
                     <ul data-bind="foreach: LessonUsers">
                        <li>
                            Lesson title: <span data-bind="text: Lesson.Title"></span>;
                            Lesson type: <span data-bind="text: Lesson.Type"></span>
                        </li>
+                    </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

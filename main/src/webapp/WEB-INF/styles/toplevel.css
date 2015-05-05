@@ -73,10 +73,11 @@ img.lp_heading_content {
 }
 .lp_course_table {
     text-align: center;
+    margin: auto;
 }
 .lp_course_summary_image {
-    max-height: 150px;
-    max-width: 100px;
+    max-height: 250px;
+    max-width: 200px;
 }
 .lp_course_summary_name {
     font-size: small;

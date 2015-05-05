@@ -5,11 +5,12 @@ function loadTrainingPlan(userId) {
 
 function trainingLoadedSuccess(result, status, xhr) {
     console.log("Got n courses: " + result.length);
-    var sorted = result.sort(compareTrainingByCategoryName);
+    var training_data_list = result.concat(getTestTrainingData());
+    var sorted = training_data_list.sort(compareTrainingByCategoryName);
     var progress = updateLessonCountsOnTrainingPlans(sorted);
     learning_plan.initial_plan(sorted);
     learning_plan.progress(""+progress+"%");
-    learning_plan.category_plan(filterPlanIntoCategories(sorted));
+    learning_plan.category_plan(structurePlanIntoCategoriesAndRows(sorted));
 }
 
 function updateLessonCountsOnTrainingPlans(training_data_list) {
@@ -20,6 +21,7 @@ function updateLessonCountsOnTrainingPlans(training_data_list) {
         updateLessonCountsOnTrainingPlan(training_data);
         numLessons += training_data.LessonUsers.length;
         numCompleted += training_data.numCompleted;
+        training_data.imageName = getDummyCourseImageName(t);
     }
     return Math.round((numCompleted / numLessons) * 100);
 }
@@ -48,6 +50,7 @@ function updateLessonCountsOnTrainingPlan(training_data) {
     training_data.numCompleted = numCompleted;
     training_data.completed = (numCompleted == training_data.LessonUsers.length);
     training_data.isOnline = isOnline;
+    training_data.blank = false;
 }
 
 function getLessonUserStatus(lessonUser) {
@@ -67,12 +70,6 @@ function isOnlineLesson(lessonType) {
     }
 }
 
-function filterPlanIntoCategories(training_data_list) {
-    var trainingDataByCategory = groupByCategories(training_data_list)
-    console.log("Got n categories: " + trainingDataByCategory.length);
-    return trainingDataByCategory;
-}
-
 function compareTrainingByCategoryName(training_data_a, training_data_b) {
     var aCategory = training_data_a.CourseCategory;
     var bCategory = training_data_b.CourseCategory;
@@ -84,7 +81,13 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
     return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
 }
 
-function groupByCategories(training_data_list) {
+function structurePlanIntoCategoriesAndRows(training_data_list) {
+    var trainingDataByCategory = groupByCategoriesAndRows(training_data_list)
+    console.log("Got n categories: " + trainingDataByCategory.length);
+    return trainingDataByCategory;
+}
+
+function groupByCategoriesAndRows(training_data_list) {
     var arrayByCategoryName = training_data_list.reduce(function(result, current) {
         var category = current.CourseCategory;
         var categoryName = (category == null) ? "" : category.Title;
@@ -94,10 +97,33 @@ function groupByCategories(training_data_list) {
     }, {});
     var trainingByCategory = []
     for (var categoryName in arrayByCategoryName) {
-        trainingByCategory.push({categoryName: categoryName, training_data_list: arrayByCategoryName[categoryName]})
+        var rows = [];
+        var row = [];
+        var training_data_for_category = arrayByCategoryName[categoryName];
+        for (var t = 0; t < training_data_for_category.length; t++) {
+            if (row.length == coursesPerRow) {
+                rows.push(row);
+                row = [];
+            }
+            row.push(training_data_for_category[t]);
+        }
+        for (var t = row.length; t < coursesPerRow; t++) {
+            row.push(BlankTrainingData);
+        }
+        rows.push(row);
+        trainingByCategory.push({categoryName: categoryName, training_data_rows: rows})
     }
     return trainingByCategory;
 }
+
+BlankTrainingData = {
+    Course: {Summary: "[Blank Data]"},
+    LessonUsers: [],
+    //Status: "Not started",
+    //completed: false,
+    //numCompleted: 0,
+    blank: true
+};
 
 LearningRecordStatuses = {
     Exempt: 0,
@@ -113,7 +139,7 @@ LearningRecordStatuses = {
     Withdrawn: 10,
     NotStarted: 11,
     Unknown: 12
-}
+};
 
 LessonTypes = {
     Aicc: "Aicc",
@@ -131,4 +157,4 @@ LessonTypes = {
     WebEx: "WebEx",
     Container: "Container",
     Other: "Other"
-}
+};
