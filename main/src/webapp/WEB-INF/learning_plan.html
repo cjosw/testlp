@@ -77,25 +77,23 @@
             <div class="col-md-12">
                 <div class="col-md-12 lp_category_section_header">
                     <!-- ko if: categoryName -->
-                    <b><span data-bind="text: categoryName"></span></b>
+                    <span data-bind="text: categoryName"></span>
                     <!-- /ko -->
                     <!-- ko if: !categoryName -->
-                    <b>[ No Category specified ]</b>
+                    [ No Category specified ]
                     <!-- /ko -->
                 </div>
             </div>
         </div>
         <!-- ko foreach: training_data_rows -->
+        <div>
         <div class="row">
             <div class="col-md-12">
                 <table class="lp_course_section">
                     <tr>
-                        <!-- ko foreach: $data -->
+                        <!-- ko foreach: courses -->
                         <td class="col-md-2">
-                            <!-- ko if: blank -->
-                            <!-- /ko -->
-                            <!-- ko if: !blank -->
-                                <table class="lp_course_table">
+                                <table data-bind="if: !blank" class="lp_course_table">
                                     <tr>
                                         <td>
                                             <img class="lp_course_summary_image" data-bind="src: imageName">
@@ -122,43 +120,90 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Button</td>
+                                        <td>
+                                            <div data-bind="if: !expanded()">
+                                                <button data-bind="click: expandTrainingData" type="button" class="btn btn-primary btn-sm lp_view_info_btn">View Info</button>
+                                            </div>
+                                            <div data-bind="if: expanded()">
+                                                <button data-bind="click: collapseTrainingData" type="button" class="btn btn-primary btn-sm lp_hide_info_btn">
+                                                    <span class="glyphicon glyphicon-remove"></span>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </table>
-                            <!-- /ko -->
                         </td>
                         <!-- /ko -->
                     </tr>
                 </table>
             </div>
         </div>
+        <div class="lp_expanded_course" data-bind="slideIn: expanded()">
+            <div class="col-md-12" data-bind="with: current_training()">
+                <div class="col-md-5">
+                    <div class="col-md-6 pull-right">
+                        <img class="lp_course_expanded_image" data-bind="src: imageName">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="row">
+                        <div class="col-md-12 lp_course_expanded_name">
+                            <span data-bind="text: Course.Summary"></span>
+                        </div>
+                        <div class="col-md-12 lp_course_expanded_description">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                            </p>
+                        </div>
+                        <div class="col-md-12 lp_course_expanded_links">
+                            <div class="col-md-3">
+                                <a href="#"><span class="glyphicon glyphicon-new-window"></span> Live chat</a>
+                            </div>
+                            <div class="col-md-6">
+                                <a href="#"><span class="glyphicon glyphicon-new-window"></span> Community chat</a>
+                            </div>
+                        </div>
+                        <!-- ko foreach: LessonUsers -->
+                        <div class="col-md-12 lp_course_expanded_lesson">
+                            <div>
+                                <div class="col-md-9">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <span class="lp_course_expanded_lesson_title" data-bind="text: Lesson.Title"></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
+                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
+                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
+                                                <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="button" class="btn btn-primary btn-sm">Book</button>
+                                </div>
+                                <div class="col-md-12">
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /ko -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
         <!-- /ko -->
     </div>
     <!-- /ko -->
-
-    <div>
-    <ul data-bind="foreach: learning_plan.category_plan">
-        <li>
-            Category: <span data-bind="text: categoryName"></span>
-            <ul data-bind="foreach: training_data_rows">
-                <li>
-                    Row: <span data-bind="text: $index"></span>
-                    <ul data-bind="foreach: $data">
-                        <li>
-                    Course title: <span data-bind="text: Course.Summary"></span>
-                    <ul data-bind="foreach: LessonUsers">
-                       <li>
-                           Lesson title: <span data-bind="text: Lesson.Title"></span>;
-                           Lesson type: <span data-bind="text: Lesson.Type"></span>
-                       </li>
-                    </ul>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-    </ul>
-    </div>
 
     <script type="text/javascript">
         startup()

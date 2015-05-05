@@ -52,6 +52,7 @@ function updateLessonCountsOnTrainingPlan(training_data) {
     training_data.completed = (numCompleted == training_data.LessonUsers.length);
     training_data.isOnline = isOnline;
     training_data.blank = false;
+    training_data.expanded = ko.observable(false);
 }
 
 function getLessonUserStatus(lessonUser) {
@@ -105,22 +106,64 @@ function groupByCategoriesAndRows(training_data_list) {
     var trainingByCategory = []
     for (var categoryName in arrayByCategoryName) {
         var rows = [];
-        var row = [];
+        var row = blankRow();
         var training_data_for_category = arrayByCategoryName[categoryName];
         for (var t = 0; t < training_data_for_category.length; t++) {
-            if (row.length == coursesPerRow) {
+            if (row.courses.length == coursesPerRow) {
                 rows.push(row);
-                row = [];
+                row = blankRow();
             }
-            row.push(training_data_for_category[t]);
+            training_data_for_category[t].enclosingRow = row;
+            training_data_for_category[t].columnNumber = row.courses.length;
+            row.courses.push(training_data_for_category[t]);
         }
-        for (var t = row.length; t < coursesPerRow; t++) {
-            row.push(BlankTrainingData);
+        for (var t = row.courses.length; t < coursesPerRow; t++) {
+            row.courses.push(BlankTrainingData);
         }
         rows.push(row);
         trainingByCategory.push({categoryName: categoryName, training_data_rows: rows})
     }
     return trainingByCategory;
+}
+
+function blankRow() {
+    return {
+        courses: [],
+        expanded: ko.observable(false),
+        current_training: ko.observable()
+    };
+}
+
+function expandTrainingData(training_data) {
+    collapseTraningDataIfOpen();
+    console.log("Clicked on expandTrainingData: row: " + training_data.enclosingRow + "; col: " + training_data.columnNumber);
+    var row = training_data.enclosingRow;
+    training_data.expanded(true);
+    row.expanded(true);
+    row.current_training(training_data);
+}
+
+function collapseTraningDataIfOpen() {
+    var category_plan_array = learning_plan.category_plan();
+    for (var c = 0; c < category_plan_array.length; c++) {
+        var category_plan = category_plan_array[c];
+        var rows = category_plan.training_data_rows;
+        for (var r = 0; r < rows.length; r++) {
+            var row = rows[r];
+            if (row.expanded()) {
+                console.log("Collapsing: category: " + c + "; row: " + r);
+                row.current_training().expanded(false);
+                row.expanded(false);
+            }
+        }
+    }
+}
+
+function collapseTrainingData(training_data) {
+    console.log("Clicked on collapseTrainingData: row: " + training_data.enclosingRow + "; col: " + training_data.columnNumber);
+    var row = training_data.enclosingRow;
+    training_data.expanded(false);
+    row.expanded(false);
 }
 
 BlankTrainingData = {
