@@ -33,6 +33,7 @@ function getTrainingData(categoryName, num) {
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
+        training_data.Course.Summary = "Course 3 which is a very long name which needs truncating";
     }
     return training_data;
 }

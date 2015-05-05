@@ -103,22 +103,20 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <span class="lp_course_summary_name">
-                                                <b><span data-bind="text: Course.Summary"></span></b>
-                                            </span>
+                                            <span class="lp_course_summary_name lp_truncate" data-bind="text: Course.Summary"></span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <!-- ko if: completed -->
-                                                Completed
+                                                <span class="lp_course_fully_completed">Completed</span>
                                             <!-- /ko -->
                                             <!-- ko if: !completed -->
                                                 <!-- ko if: numCompleted == 0 -->
-                                                    <span data-bind="text: LessonUsers.length"></span> Lessons
+                                                    <span class="lp_course_not_started"><span data-bind="text: LessonUsers.length"></span> Lessons</span>
                                                 <!-- /ko -->
                                                 <!-- ko if: numCompleted != 0 -->
-                                                    <span data-bind="text: numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete
+                                                    <span class="lp_course_part_completed"><span data-bind="text: numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete</span>
                                                 <!-- /ko -->
                                             <!-- /ko -->
                                         </td>
