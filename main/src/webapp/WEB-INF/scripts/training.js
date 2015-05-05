@@ -6,6 +6,7 @@ function loadTrainingPlan(userId) {
 function trainingLoadedSuccess(result, status, xhr) {
     console.log("Got n courses: " + result.length);
     var training_data_list = result.concat(getTestTrainingData());
+    addInitialOrderingForSortStability(training_data_list);
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
     var progress = updateLessonCountsOnTrainingPlans(sorted);
     learning_plan.initial_plan(sorted);
@@ -70,6 +71,12 @@ function isOnlineLesson(lessonType) {
     }
 }
 
+function addInitialOrderingForSortStability(training_data_list) {
+    for (var t = 0; t < training_data_list.length; t++) {
+        training_data_list[t].sortOrder = t;
+    }
+}
+
 function compareTrainingByCategoryName(training_data_a, training_data_b) {
     var aCategory = training_data_a.CourseCategory;
     var bCategory = training_data_b.CourseCategory;
@@ -78,7 +85,7 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
     if (!bCategory) return -1;
     var aName = aCategory.Title;
     var bName = bCategory.Title;
-    return ((aName < bName) ? -1 : ((aName > bName) ? 1 : 0));
+    return ((aName < bName) ? -1 : ((aName > bName) ? 1 : (training_data_a.sortOrder - training_data_b.sortOrder)));
 }
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {
