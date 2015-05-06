@@ -178,11 +178,14 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
-                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
-                                                <span class="glyphicon glyphicon-star lp_star_filled"></span>
-                                                <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
-                                                <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
+                                                <!-- ko foreach: stars -->
+                                                    <!-- ko if: $data -->
+                                                        <span class="glyphicon glyphicon-star lp_star_filled"></span>
+                                                    <!-- /ko -->
+                                                    <!-- ko if: !$data -->
+                                                        <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
+                                                    <!-- /ko -->
+                                                <!-- /ko -->
                                             </td>
                                         </tr>
                                     </table>
@@ -191,7 +194,7 @@
                                     <button type="button" class="btn btn-primary btn-sm">Book</button>
                                 </div>
                                 <div class="col-md-12">
-                                    <hr>
+                                    <hr class="lp_course_expanded_lesson_divider">
                                 </div>
                             </div>
                         </div>

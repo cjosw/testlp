@@ -39,6 +39,7 @@ function updateLessonCountsOnTrainingPlan(training_data) {
         } else {
             lessonUser.completed = false;
         }
+        lessonUser.stars = [0,0,0,0,0];
         lessonUser.isOnline = isOnlineLesson(lessonUser.Lesson.Type);
         isOnline = isOnline || lessonUser.isOnline;
     }

@@ -163,3 +163,7 @@ img.lp_heading_content {
 .lp_star_empty {
     color: grey;
 }
+.lp_course_expanded_lesson_divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
