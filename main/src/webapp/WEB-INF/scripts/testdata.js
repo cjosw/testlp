@@ -26,13 +26,30 @@ function getTrainingData(categoryName, num) {
                     Title: "Lesson B",
                     Type: "Scorm"
                 }
+            },
+            {
+                ShowBestScoreOnLearningPlan: true,
+                BestStatus: null,
+                Lesson: {
+                    Title: "Lesson C",
+                    Type: "Scorm"
+                }
             }
         ],
         Status: "Not started"
     };
+    if (num == 1) {
+        training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.NotStarted;
+        training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
+        training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Cancelled;
+    }
+    if (num == 2) {
+        training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
+    }
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
+        training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Complete;
         training_data.Course.Summary = "Course 3 which is a very long name which needs truncating";
     }
     return training_data;

@@ -190,8 +190,21 @@
                                         </tr>
                                     </table>
                                 </div>
-                                <div class="col-md-3">
-                                    <button type="button" class="btn btn-primary btn-sm">Book</button>
+                                <div class="col-md-3 lp_course_lesson_button_container">
+                                    <!-- ko if: completed -->
+                                        <button type="button" class="btn btn-default btn-sm lp_course_completed_btn" disabled="disabled">Completed</button>
+                                    <!-- /ko -->
+                                    <!-- ko if: cancelled -->
+                                        <button type="button" class="btn btn-default btn-sm lp_course_cancelled_btn" disabled="disabled">Cancelled</button>
+                                    <!-- /ko -->
+                                    <!-- ko if: bookable -->
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn">Book</button>
+                                    <!-- /ko -->
+                                    <!-- ko if: inprogress -->
+                                        <button type="button" class="btn btn-sm lp_course_inprogress_btn" disabled="disabled">
+                                            <span class="glyphicon glyphicon-ok"></span> Booked
+                                        </button>
+                                    <!-- /ko -->
                                 </div>
                                 <div class="col-md-12">
                                     <hr class="lp_course_expanded_lesson_divider">

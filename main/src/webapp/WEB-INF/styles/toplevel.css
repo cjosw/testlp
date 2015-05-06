@@ -1,6 +1,9 @@
 .lp_body {
     font-family: Arial;
 }
+.btn {
+    border-radius: 15px;
+}
 
 .lp_logo * {
     background-color: #202F40;
@@ -101,26 +104,21 @@ img.lp_heading_content {
     color: #5ECF80;
     font-style: italic;
 }
-.lp_course_part_completed {
+.lp_course_part_completed, .lp_course_not_started {
     color: grey;
     font-style: italic;
 }
-.lp_course_not_started {
-    color: grey;
-    font-style: italic;
+.lp_view_info_btn, .lp_hide_info_btn {
+    margin-top: 10px;
 }
 .lp_view_info_btn {
-    margin-top: 10px;
     border-color: white;
     background-color: white;
     color: #218DC3;
-    border-radius: 15px;
 }
 .lp_hide_info_btn {
-    margin-top: 10px;
     background-color: #218DC3;
     color: white;
-    border-radius: 15px;
 }
 .lp_hide_info_btn span {
     background-color: #218DC3;
@@ -142,17 +140,13 @@ img.lp_heading_content {
     margin-top: 25px;
     margin-bottom: 15px;
 }
-.lp_course_expanded_description {
-    margin-bottom: 15px;
-}
-.lp_course_expanded_links {
+.lp_course_expanded_description, .lp_course_expanded_links {
     margin-bottom: 15px;
 }
 .lp_course_expanded_lessons {
 }
 .lp_course_expanded_lesson {
     margin-bottom: 10px;
-    border-bottom: medium;
 }
 .lp_course_expanded_lesson_title {
     font-weight: bold;
@@ -166,4 +160,23 @@ img.lp_heading_content {
 .lp_course_expanded_lesson_divider {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+.lp_course_lesson_button_container {
+    text-align: right;
+}
+.lp_course_completed_btn, .lp_course_cancelled_btn {
+    color: black;
+}
+.lp_course_bookable_btn {
+    color: green;
+    border-color: green;
+    border-top-width:    2px; /*needs a heavier border*/
+    border-bottom-width: 2px;
+    border-left-width:   2px;
+    border-right-width:  2px;
+}
+.lp_course_bookable_btn:hover, .lp_course_bookable_btn:active, .lp_course_bookable_btn:focus,
+.lp_course_inprogress_btn, .lp_course_inprogress_btn span {
+    background-color: green !important;
+    color: white;
 }

@@ -8,26 +8,22 @@ function trainingLoadedSuccess(result, status, xhr) {
     var training_data_list = result.concat(getTestTrainingData());
     addInitialOrderingForSortStability(training_data_list);
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
-    var progress = updateLessonCountsOnTrainingPlans(sorted);
+    updateStaticDataOnTrainingPlans(sorted);
+    var progress = getOverallProgress(sorted);
     learning_plan.initial_plan(sorted);
     learning_plan.progress(""+progress+"%");
     learning_plan.category_plan(structurePlanIntoCategoriesAndRows(sorted));
 }
 
-function updateLessonCountsOnTrainingPlans(training_data_list) {
-    var numLessons = 0;
-    var numCompleted = 0;
+function updateStaticDataOnTrainingPlans(training_data_list) {
     for (var t = 0; t < training_data_list.length; t++) {
         var training_data = training_data_list[t];
-        updateLessonCountsOnTrainingPlan(training_data);
-        numLessons += training_data.LessonUsers.length;
-        numCompleted += training_data.numCompleted;
+        updateStaticDataOnTrainingPlan(training_data);
         training_data.imageName = getDummyCourseImageName(t);
     }
-    return Math.round((numCompleted / numLessons) * 100);
 }
 
-function updateLessonCountsOnTrainingPlan(training_data) {
+function updateStaticDataOnTrainingPlan(training_data) {
     var numCompleted = 0;
     var isOnline = false;
     for (var l = 0; l < training_data.LessonUsers.length; l++) {
@@ -39,6 +35,10 @@ function updateLessonCountsOnTrainingPlan(training_data) {
         } else {
             lessonUser.completed = false;
         }
+        lessonUser.status = status; // save the correct copy of the status
+        lessonUser.cancelled = (status == LearningRecordStatuses.Cancelled);
+        lessonUser.bookable  = (status == LearningRecordStatuses.NotStarted) || (status == null);
+        lessonUser.inprogress  = !(lessonUser.completed || lessonUser.cancelled || lessonUser.bookable);
         lessonUser.stars = [0,0,0,0,0];
         lessonUser.isOnline = isOnlineLesson(lessonUser.Lesson.Type);
         isOnline = isOnline || lessonUser.isOnline;
@@ -83,6 +83,17 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
     var aName = aCategory.Title;
     var bName = bCategory.Title;
     return ((aName < bName) ? -1 : ((aName > bName) ? 1 : (training_data_a.sortOrder - training_data_b.sortOrder)));
+}
+
+function getOverallProgress(training_data_list) {
+    var numLessons = 0;
+    var numCompleted = 0;
+    for (var t = 0; t < training_data_list.length; t++) {
+        var training_data = training_data_list[t];
+        numLessons += training_data.LessonUsers.length;
+        numCompleted += training_data.numCompleted;
+    }
+    return Math.round((numCompleted / numLessons) * 100);
 }
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {
