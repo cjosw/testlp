@@ -1,6 +1,11 @@
 function loadTrainingPlan(userId) {
-    console.log("Loading training plan for userId: " + userId + " ...")
-    invokeAjax(rootAPIUrl + 'users/' + userId + '/training', trainingLoadedSuccess);
+    if (useDummyTrainingData) {
+        console.log("Loading dummy training plan ...")
+        trainingLoadedSuccess([])
+    } else {
+        console.log("Loading training plan for userId: " + userId + " ...")
+        invokeAjax(rootAPIUrl + 'users/' + userId + '/training', trainingLoadedSuccess);
+    }
 }
 
 function trainingLoadedSuccess(result, status, xhr) {

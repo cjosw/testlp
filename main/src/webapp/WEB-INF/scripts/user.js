@@ -1,6 +1,11 @@
 function loadUser(userId) {
-    console.log("Loading userId: " + userId + " ...")
-    invokeAjax(rootAPIUrl + 'users/' + userId, userLoadedSuccess);
+    if (useDummyUser) {
+        console.log("Loading dummy user ...")
+        userLoadedSuccess({FirstName: "Mona", LastName: "Lisa"})
+    } else {
+        console.log("Loading userId: " + userId + " ...")
+        invokeAjax(rootAPIUrl + 'users/' + userId, userLoadedSuccess);
+    }
 }
 
 function userLoadedSuccess(result, status, xhr) {

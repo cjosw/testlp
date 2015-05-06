@@ -19,7 +19,7 @@ function getTrailingGuid(url) {
     return res[res.length - 1];
 }
 
-function decodeURLQueryParams(){
+function retrieveURLQueryParams(){
     var url = location.href;
     var qs = url.substring(url.indexOf('?') + 1).split('&');
     for(var i = 0, result = {}; i < qs.length; i++){
@@ -27,4 +27,17 @@ function decodeURLQueryParams(){
         result[qs[i][0]] = decodeURIComponent(qs[i][1]);
     }
     return result;
+}
+
+function decodeQueryParam(params, key, default_val) {
+    var param = params[key];
+    return param ? param : default_val;
+}
+
+function decodeIntQueryParam(params, key, default_val) {
+    return parseInt(decodeQueryParam(params, key, default_val));
+}
+
+function decodeBooleanQueryParam(params, key, default_val) {
+    return decodeQueryParam(params, key, default_val) == "true";
 }

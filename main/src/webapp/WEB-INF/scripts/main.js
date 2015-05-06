@@ -19,14 +19,11 @@ function startup() {
 }
 
 function decodeQueryParams() {
-    var params = decodeURLQueryParams();
+    var params = retrieveURLQueryParams();
     userId     = decodeQueryParam(params, "userId",     '80380afd-42fa-4baa-a8c1-66ff2c8799d7');
     rootAPIUrl = decodeQueryParam(params, "rootAPIUrl", 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/');
     rootUIUrl  = decodeQueryParam(params, "rootUIUrl",  'http://dev.kallidus.com/DevEval/LMS/');
-    coursesPerRow = parseInt(decodeQueryParam(params, "coursesPerRow", 6));
-}
-
-function decodeQueryParam(params, key, default_val) {
-    var param = params[key];
-    return param ? param : default_val;
+    coursesPerRow        = decodeIntQueryParam(params, "coursesPerRow", 6);
+    useDummyUser         = decodeBooleanQueryParam(params, "useDummyUser", "false");
+    useDummyTrainingData = decodeBooleanQueryParam(params, "useDummyTrainingData", "false");
 }
