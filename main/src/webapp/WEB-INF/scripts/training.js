@@ -77,7 +77,7 @@ function addInitialOrderingForSortStability(training_data_list) {
 function compareTrainingByCategoryName(training_data_a, training_data_b) {
     var aCategory = training_data_a.CourseCategory;
     var bCategory = training_data_b.CourseCategory;
-    if (!aCategory && !bCategory) return 0;
+    if (!aCategory && !bCategory) return (training_data_a.sortOrder - training_data_b.sortOrder);
     if (!aCategory) return 1; // null categories get sorted to the end
     if (!bCategory) return -1;
     var aName = aCategory.Title;
