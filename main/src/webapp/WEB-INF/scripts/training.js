@@ -41,13 +41,8 @@ function updateLessonCountsOnTrainingPlan(training_data) {
         }
         lessonUser.isOnline = isOnlineLesson(lessonUser.Lesson.Type);
         isOnline = isOnline || lessonUser.isOnline;
-        console.log("updating: " + lessonUser.Lesson.Title + "; completed: " + lessonUser.completed + "; online: " + lessonUser.isOnline);
     }
 
-    // qq just for making the test data look more useful
-    if (training_data.LessonUsers.length > 1 && numCompleted == 0) { numCompleted = 1; }
-
-    console.log("updating: " + training_data.Course.Summary + " " + numCompleted + "/" + training_data.LessonUsers.length);
     training_data.numCompleted = numCompleted;
     training_data.completed = (numCompleted == training_data.LessonUsers.length);
     training_data.isOnline = isOnline;
@@ -96,6 +91,15 @@ function structurePlanIntoCategoriesAndRows(training_data_list) {
 }
 
 function groupByCategoriesAndRows(training_data_list) {
+    var arrayByCategoryName = groupByCategories(training_data_list);
+    return groupCategoriesIntoRows(arrayByCategoryName);
+}
+
+function groupByCategories(training_data_list) {
+
+    // This returns an associative array keyed by categoryName,
+    // each holding a list of training_data records.
+
     var arrayByCategoryName = training_data_list.reduce(function(result, current) {
         var category = current.CourseCategory;
         var categoryName = (category == null) ? "" : category.Title;
@@ -103,6 +107,16 @@ function groupByCategoriesAndRows(training_data_list) {
         result[categoryName].push(current);
         return result;
     }, {});
+    return arrayByCategoryName;
+}
+
+function groupCategoriesIntoRows(arrayByCategoryName) {
+
+    // This returns a list of categories, in the same order as the incoming array.
+    // Each category has a list of rows, each holding exactly n entries.
+    // Each row has a list of trainig_data entries ('courses'), plus some flags.
+    // The rows are 'blank padded' to the full width to aid layout on the page.
+
     var trainingByCategory = []
     for (var categoryName in arrayByCategoryName) {
         var rows = [];
@@ -136,7 +150,6 @@ function blankRow() {
 
 function expandTrainingData(training_data) {
     collapseTraningDataIfOpen();
-    console.log("Clicked on expandTrainingData: row: " + training_data.enclosingRow + "; col: " + training_data.columnNumber);
     var row = training_data.enclosingRow;
     training_data.expanded(true);
     row.expanded(true);
@@ -151,7 +164,6 @@ function collapseTraningDataIfOpen() {
         for (var r = 0; r < rows.length; r++) {
             var row = rows[r];
             if (row.expanded()) {
-                console.log("Collapsing: category: " + c + "; row: " + r);
                 row.current_training().expanded(false);
                 row.expanded(false);
             }
@@ -160,7 +172,6 @@ function collapseTraningDataIfOpen() {
 }
 
 function collapseTrainingData(training_data) {
-    console.log("Clicked on collapseTrainingData: row: " + training_data.enclosingRow + "; col: " + training_data.columnNumber);
     var row = training_data.enclosingRow;
     training_data.expanded(false);
     row.expanded(false);
