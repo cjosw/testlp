@@ -74,9 +74,6 @@ img.lp_heading_content {
 .lp_category_section * {
     background-color: #ECEFF4;
 }
-.lp_category_section .row {
-    padding-bottom: 10px;
-}
 .lp_category_section_header {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -117,6 +114,7 @@ img.lp_heading_content {
 }
 .lp_view_info_btn, .lp_hide_info_btn {
     margin-top: 10px;
+    margin-bottom: 10px;
 }
 .lp_view_info_btn {
     border-color: white;
@@ -129,6 +127,26 @@ img.lp_heading_content {
 }
 .lp_hide_info_btn span {
     background-color: #218DC3;
+}
+.lp_expansion_row {
+    margin-top: 10px;
+}
+.lp_expansion_indicator {
+}
+.arrow-up, .arrow-up-hidden {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+}
+.arrow-up {
+    border-bottom: 25px solid white;
+}
+.arrow-up-hidden {
+    border-bottom: 25px solid #ECEFF4; /* same as standard background color */
+}
+.lp_expansion_centraliser {
+    margin: 0 auto;
 }
 .lp_category_section * .lp_expanded_course * {
     background-color: white;
