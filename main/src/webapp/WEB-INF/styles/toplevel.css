@@ -64,6 +64,13 @@ img.lp_heading_content {
     margin-bottom: 5px;
 }
 
+.lp_footer_bar {
+    height: 50px;
+}
+.lp_footer_content {
+    height: 100%;
+}
+
 .lp_category_section * {
     background-color: #ECEFF4;
 }
