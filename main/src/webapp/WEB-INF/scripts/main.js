@@ -8,10 +8,7 @@ function LearningPlanViewModel() {
 }
 
 function startup() {
-    rootAPIUrl = 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/';
-    rootUIUrl = 'http://dev.kallidus.com/DevEval/LMS/';
-    userId = '80380afd-42fa-4baa-a8c1-66ff2c8799d7';
-    coursesPerRow = 6;
+    decodeQueryParams();
 
     learning_plan = new LearningPlanViewModel();
     setupKnockoutCustomisations();
@@ -19,4 +16,17 @@ function startup() {
 
     loadUser(userId);
     loadTrainingPlan(userId);
+}
+
+function decodeQueryParams() {
+    var params = decodeURLQueryParams();
+    userId     = decodeQueryParam(params, "userId",     '80380afd-42fa-4baa-a8c1-66ff2c8799d7');
+    rootAPIUrl = decodeQueryParam(params, "rootAPIUrl", 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/');
+    rootUIUrl  = decodeQueryParam(params, "rootUIUrl",  'http://dev.kallidus.com/DevEval/LMS/');
+    coursesPerRow = parseInt(decodeQueryParam(params, "coursesPerRow", 6));
+}
+
+function decodeQueryParam(params, key, default_val) {
+    var param = params[key];
+    return param ? param : default_val;
 }
