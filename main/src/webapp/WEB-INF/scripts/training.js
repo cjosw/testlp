@@ -1,6 +1,6 @@
 function loadTrainingPlan(userId) {
     console.log("Loading training plan for userId: " + userId + " ...")
-    invokeAjax(rootUrl + 'users/' + userId + '/training', trainingLoadedSuccess);
+    invokeAjax(rootAPIUrl + 'users/' + userId + '/training', trainingLoadedSuccess);
 }
 
 function trainingLoadedSuccess(result, status, xhr) {
@@ -37,22 +37,29 @@ function updateStaticDataOnTrainingPlan(training_data) {
         }
         lessonUser.status = status; // save the correct copy of the status
         lessonUser.cancelled = (status == LearningRecordStatuses.Cancelled);
-        lessonUser.bookable  = (status == LearningRecordStatuses.NotStarted) || (status == null);
+        lessonUser.bookable  = (status == LearningRecordStatuses.NotStarted) || (status == LearningRecordStatuses.Unknown);
         lessonUser.inprogress  = !(lessonUser.completed || lessonUser.cancelled || lessonUser.bookable);
         lessonUser.stars = [0,0,0,0,0];
         lessonUser.isOnline = isOnlineLesson(lessonUser.Lesson.Type);
+        lessonUser.Lesson.lessonId = getTrailingGuid(lessonUser.Lesson.Id);
+        lessonUser.parentTrainingData = training_data;
         isOnline = isOnline || lessonUser.isOnline;
     }
 
     training_data.numCompleted = numCompleted;
     training_data.completed = (numCompleted == training_data.LessonUsers.length);
+    training_data.Course.courseId = getTrailingGuid(training_data.Course.Id);
     training_data.isOnline = isOnline;
     training_data.blank = false;
     training_data.expanded = ko.observable(false);
 }
 
 function getLessonUserStatus(lessonUser) {
-    return lessonUser.ShowBestScoreOnLearningPlan ? lessonUser.BestStatus : lessonUser.LastStatus;
+    var status = lessonUser.ShowBestScoreOnLearningPlan ? lessonUser.BestStatus : lessonUser.LastStatus;
+    if (status == null || status == "") {
+        status = LearningRecordStatuses.Unknown;
+    }
+    return status;
 }
 
 function isOnlineLesson(lessonType) {
@@ -187,6 +194,21 @@ function collapseTrainingData(training_data) {
     var row = training_data.enclosingRow;
     training_data.expanded(false);
     row.expanded(false);
+}
+
+function bookLessonUser(lessonUser) {
+    if (lessonUser.isOnline) {
+        var lessonId = lessonUser.Lesson.lessonId;
+        var courseId = lessonUser.parentTrainingData.Course.courseId;
+        console.log("About to launch online course; lessonId: " + lessonId + "; courseId: " + courseId);
+        window.open(rootUIUrl + 'student/frmLaunchLesson.aspx?StandardReset=true&url=&learningobjectguid=' + lessonId + '&courseguid='+courseId,
+            '',
+            'toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,left=0,screenX=0,top=0,screenY=0,width='
+            + (screen.availWidth - 10) + ',height=' + (screen.availHeight - 20)
+        );
+    } else {
+        console.log("About to launch booking page for non-online course");
+    }
 }
 
 BlankTrainingData = {

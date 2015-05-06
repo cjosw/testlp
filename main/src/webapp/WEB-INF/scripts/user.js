@@ -1,6 +1,6 @@
 function loadUser(userId) {
     console.log("Loading userId: " + userId + " ...")
-    invokeAjax(rootUrl + 'users/' + userId, userLoadedSuccess);
+    invokeAjax(rootAPIUrl + 'users/' + userId, userLoadedSuccess);
 }
 
 function userLoadedSuccess(result, status, xhr) {

@@ -8,7 +8,8 @@ function LearningPlanViewModel() {
 }
 
 function startup() {
-    rootUrl = 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/';
+    rootAPIUrl = 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/';
+    rootUIUrl = 'http://dev.kallidus.com/DevEval/LMS/';
     userId = '80380afd-42fa-4baa-a8c1-66ff2c8799d7';
     coursesPerRow = 6;
 

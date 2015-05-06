@@ -7,16 +7,18 @@ function getTestTrainingData() {
 }
 
 function getTrainingData(categoryName, num) {
+    var lessonType = ((num % 2) == 0) ? LessonTypes.Scorm : LessonTypes.Classroom;
     var training_data = {
         CourseCategory: {Title: categoryName},
-        Course: {Summary: "Course " + num},
+        Course: {Summary: "Course " + num, Id: "course-" + num + "-guid"},
         LessonUsers: [
             {
                 ShowBestScoreOnLearningPlan: true,
                 BestStatus: null,
                 Lesson: {
                     Title: "Lesson A",
-                    Type: "Scorm"
+                    Id: "course-" + num + "-lesson-a-guid",
+                    Type: lessonType
                 }
             },
             {
@@ -24,7 +26,8 @@ function getTrainingData(categoryName, num) {
                 BestStatus: null,
                 Lesson: {
                     Title: "Lesson B",
-                    Type: "Scorm"
+                    Id: "course-" + num + "-lesson-b-guid",
+                    Type: lessonType
                 }
             },
             {
@@ -32,7 +35,8 @@ function getTrainingData(categoryName, num) {
                 BestStatus: null,
                 Lesson: {
                     Title: "Lesson C",
-                    Type: "Scorm"
+                    Id: "course-" + num + "-lesson-c-guid",
+                    Type: lessonType
                 }
             }
         ],

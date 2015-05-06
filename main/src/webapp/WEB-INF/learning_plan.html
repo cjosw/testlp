@@ -111,7 +111,9 @@
                                             <!-- /ko -->
                                             <!-- ko if: !completed -->
                                                 <!-- ko if: numCompleted == 0 -->
-                                                    <span class="lp_course_not_started"><span data-bind="text: LessonUsers.length"></span> Lessons</span>
+                                                    <span class="lp_course_not_started"><span data-bind="text: LessonUsers.length"></span>
+                                                        Lesson<span data-bind="if: (LessonUsers.length > 1)">s</span>
+                                                    </span>
                                                 <!-- /ko -->
                                                 <!-- ko if: numCompleted != 0 -->
                                                     <span class="lp_course_part_completed"><span data-bind="text: numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete</span>
@@ -191,6 +193,8 @@
                                     </table>
                                 </div>
                                 <div class="col-md-3 lp_course_lesson_button_container">
+                                    <!--(<span data-bind="text: status"></span>)-->
+                                    <!--(<span data-bind="text: isOnline"></span>)-->
                                     <!-- ko if: completed -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_completed_btn" disabled="disabled">Completed</button>
                                     <!-- /ko -->
@@ -198,7 +202,7 @@
                                         <button type="button" class="btn btn-default btn-sm lp_course_cancelled_btn" disabled="disabled">Cancelled</button>
                                     <!-- /ko -->
                                     <!-- ko if: bookable -->
-                                        <button type="button" class="btn btn-sm lp_course_bookable_btn">Book</button>
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">Book</button>
                                     <!-- /ko -->
                                     <!-- ko if: inprogress -->
                                         <button type="button" class="btn btn-sm lp_course_inprogress_btn" disabled="disabled">

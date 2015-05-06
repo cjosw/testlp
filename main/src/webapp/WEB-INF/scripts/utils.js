@@ -13,3 +13,8 @@ function invokeAjax(url, successFn) {
         })(this)
     });
 }
+
+function getTrailingGuid(url) {
+    var res = url.split("/");
+    return res[res.length - 1];
+}
