@@ -94,7 +94,7 @@
                     <tr>
                         <!-- ko foreach: courses -->
                         <td class="col-md-2">
-                                <table data-bind="if: !blank" class="lp_course_table">
+                                <table data-bind="if: !extraTrainingInfo.blank" class="lp_course_table">
                                     <tr>
                                         <td>
                                             <img class="lp_course_summary_image" data-bind="src: imageName">
@@ -107,27 +107,27 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <!-- ko if: completed -->
+                                            <!-- ko if: extraTrainingInfo.completed -->
                                                 <span class="lp_course_fully_completed">Completed</span>
                                             <!-- /ko -->
-                                            <!-- ko if: !completed -->
-                                                <!-- ko if: numCompleted == 0 -->
+                                            <!-- ko if: !extraTrainingInfo.completed -->
+                                                <!-- ko if: extraTrainingInfo.numCompleted == 0 -->
                                                     <span class="lp_course_not_started"><span data-bind="text: LessonUsers.length"></span>
                                                         Lesson<span data-bind="if: (LessonUsers.length > 1)">s</span>
                                                     </span>
                                                 <!-- /ko -->
-                                                <!-- ko if: numCompleted != 0 -->
-                                                    <span class="lp_course_part_completed"><span data-bind="text: numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete</span>
+                                                <!-- ko if: extraTrainingInfo.numCompleted != 0 -->
+                                                    <span class="lp_course_part_completed"><span data-bind="text: extraTrainingInfo.numCompleted"></span>/<span data-bind="text: LessonUsers.length"></span> Lessons Complete</span>
                                                 <!-- /ko -->
                                             <!-- /ko -->
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div data-bind="if: !expanded()">
+                                            <div data-bind="if: !extraTrainingInfo.expanded()">
                                                 <button data-bind="click: expandTrainingData" type="button" class="btn btn-primary btn-sm lp_view_info_btn">View Info</button>
                                             </div>
-                                            <div data-bind="if: expanded()">
+                                            <div data-bind="if: extraTrainingInfo.expanded()">
                                                 <button data-bind="click: collapseTrainingData" type="button" class="btn btn-primary btn-sm lp_hide_info_btn">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
@@ -137,8 +137,8 @@
                                     <tr>
                                         <td class="lp_expansion_row">
                                             <div class="lp_expansion_indicator">
-                                                <div data-bind="visible: !expanded()" class="arrow-up-hidden lp_expansion_centraliser"></div>
-                                                <div data-bind="visible: expanded()"  class="arrow-up        lp_expansion_centraliser"></div>
+                                                <div data-bind="visible: !extraTrainingInfo.expanded()" class="arrow-up-hidden lp_expansion_centraliser"></div>
+                                                <div data-bind="visible:  extraTrainingInfo.expanded()" class="arrow-up        lp_expansion_centraliser"></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -189,7 +189,7 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <!-- ko foreach: stars -->
+                                                <!-- ko foreach: extraLessonInfo.stars -->
                                                     <!-- ko if: $data -->
                                                         <span class="glyphicon glyphicon-star lp_star_filled"></span>
                                                     <!-- /ko -->
@@ -202,18 +202,18 @@
                                     </table>
                                 </div>
                                 <div class="col-md-3 lp_course_lesson_button_container">
-                                    <!--(<span data-bind="text: status"></span>)-->
-                                    <!--(<span data-bind="text: isOnline"></span>)-->
-                                    <!-- ko if: completed -->
+                                    <!--(<span data-bind="text: extraLessonInfo.status"></span>)-->
+                                    <!--(<span data-bind="text: extraLessonInfo.isOnline"></span>)-->
+                                    <!-- ko if: extraLessonInfo.completed -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_completed_btn" disabled="disabled">Completed</button>
                                     <!-- /ko -->
-                                    <!-- ko if: cancelled -->
+                                    <!-- ko if: extraLessonInfo.cancelled -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_cancelled_btn" disabled="disabled">Cancelled</button>
                                     <!-- /ko -->
-                                    <!-- ko if: bookable -->
+                                    <!-- ko if: extraLessonInfo.bookable -->
                                         <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">Book</button>
                                     <!-- /ko -->
-                                    <!-- ko if: inprogress -->
+                                    <!-- ko if: extraLessonInfo.inprogress -->
                                         <button type="button" class="btn btn-sm lp_course_inprogress_btn" disabled="disabled">
                                             <span class="glyphicon glyphicon-ok"></span> Booked
                                         </button>

@@ -10,10 +10,12 @@ function loadTrainingPlan(userId) {
 
 function trainingLoadedSuccess(result, status, xhr) {
     var training_data_list = result;
-    console.log("Got " + training_data_list.length + " courses of real training data");
+    console.log("Got " + training_data_list.length + " training data courses");
     if (useDummyTrainingData) {
-        training_data_list = training_data_list.concat(getTestTrainingData());
-        console.log("Got " + training_data_list.length + " courses after adding dummy data");
+        var dummy_data = getTestTrainingData();
+        training_data_list = training_data_list.concat(dummy_data);
+        console.log("Got " + dummy_data.length + " dummy training data courses");
+        console.log("Got " + training_data_list.length + " training data courses in total");
     }
     addInitialOrderingForSortStability(training_data_list);
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
@@ -38,29 +40,31 @@ function updateStaticDataOnTrainingPlan(training_data) {
     for (var l = 0; l < training_data.LessonUsers.length; l++) {
         var lessonUser = training_data.LessonUsers[l];
         var status = getLessonUserStatus(lessonUser);
-        if (status == LearningRecordStatuses.Complete) {
-            lessonUser.completed = true;
-            numCompleted++;
-        } else {
-            lessonUser.completed = false;
-        }
-        lessonUser.status = status; // save the correct copy of the status
-        lessonUser.cancelled = (status == LearningRecordStatuses.Cancelled);
-        lessonUser.bookable  = (status == LearningRecordStatuses.NotStarted) || (status == LearningRecordStatuses.Unknown);
-        lessonUser.inprogress  = !(lessonUser.completed || lessonUser.cancelled || lessonUser.bookable);
-        lessonUser.stars = [0,0,0,0,0];
-        lessonUser.isOnline = isOnlineLesson(lessonUser.Lesson.Type);
+        var extraLessonInfo = {
+            status: status,
+            completed: (status == LearningRecordStatuses.Complete),
+            cancelled: (status == LearningRecordStatuses.Cancelled),
+            bookable:  (status == LearningRecordStatuses.NotStarted) || (status == LearningRecordStatuses.Unknown),
+            stars: [0,0,0,0,0],
+            isOnline: isOnlineLesson(lessonUser.Lesson.Type),
+            parentTrainingData: training_data
+        };
+        extraLessonInfo.inprogress = !(extraLessonInfo.completed || extraLessonInfo.cancelled || extraLessonInfo.bookable);
+        lessonUser.extraLessonInfo = extraLessonInfo;
         lessonUser.Lesson.lessonId = getTrailingGuid(lessonUser.Lesson.Id);
-        lessonUser.parentTrainingData = training_data;
-        isOnline = isOnline || lessonUser.isOnline;
+        isOnline = isOnline || extraLessonInfo.isOnline;
+        if (extraLessonInfo.completed) { numCompleted++; }
     }
 
-    training_data.numCompleted = numCompleted;
-    training_data.completed = (numCompleted == training_data.LessonUsers.length);
+    var extraTrainingInfo = {
+        numCompleted: numCompleted,
+        completed: (numCompleted == training_data.LessonUsers.length),
+        isOnline: isOnline,
+        blank: false,
+        expanded: ko.observable(false)
+    };
+    training_data.extraTrainingInfo = extraTrainingInfo;
     training_data.Course.courseId = getTrailingGuid(training_data.Course.Id);
-    training_data.isOnline = isOnline;
-    training_data.blank = false;
-    training_data.expanded = ko.observable(false);
 }
 
 function getLessonUserStatus(lessonUser) {
@@ -107,7 +111,7 @@ function getOverallProgress(training_data_list) {
     for (var t = 0; t < training_data_list.length; t++) {
         var training_data = training_data_list[t];
         numLessons += training_data.LessonUsers.length;
-        numCompleted += training_data.numCompleted;
+        numCompleted += training_data.extraTrainingInfo.numCompleted;
     }
     return Math.round((numCompleted / numLessons) * 100);
 }
@@ -155,8 +159,8 @@ function groupCategoriesIntoRows(arrayByCategoryName) {
                 rows.push(row);
                 row = blankRow();
             }
-            training_data_for_category[t].enclosingRow = row;
-            training_data_for_category[t].columnNumber = row.courses.length;
+            training_data_for_category[t].extraTrainingInfo.enclosingRow = row;
+            training_data_for_category[t].extraTrainingInfo.columnNumber = row.courses.length;
             row.courses.push(training_data_for_category[t]);
         }
         for (var t = row.courses.length; t < coursesPerRow; t++) {
@@ -178,8 +182,8 @@ function blankRow() {
 
 function expandTrainingData(training_data) {
     collapseTraningDataIfOpen();
-    var row = training_data.enclosingRow;
-    training_data.expanded(true);
+    var row = training_data.extraTrainingInfo.enclosingRow;
+    training_data.extraTrainingInfo.expanded(true);
     row.expanded(true);
     row.current_training(training_data);
 }
@@ -192,7 +196,7 @@ function collapseTraningDataIfOpen() {
         for (var r = 0; r < rows.length; r++) {
             var row = rows[r];
             if (row.expanded()) {
-                row.current_training().expanded(false);
+                row.current_training().extraTrainingInfo.expanded(false);
                 row.expanded(false);
             }
         }
@@ -200,15 +204,15 @@ function collapseTraningDataIfOpen() {
 }
 
 function collapseTrainingData(training_data) {
-    var row = training_data.enclosingRow;
-    training_data.expanded(false);
+    var row = training_data.extraTrainingInfo.enclosingRow;
+    training_data.extraTrainingInfo.expanded(false);
     row.expanded(false);
 }
 
 function bookLessonUser(lessonUser) {
-    if (lessonUser.isOnline) {
+    if (lessonUser.extraLessonInfo.isOnline) {
         var lessonId = lessonUser.Lesson.lessonId;
-        var courseId = lessonUser.parentTrainingData.Course.courseId;
+        var courseId = lessonUser.extraLessonInfo.parentTrainingData.Course.courseId;
         console.log("About to launch online course; lessonId: " + lessonId + "; courseId: " + courseId);
         window.open(rootUIUrl + 'student/frmLaunchLesson.aspx?StandardReset=true&url=&learningobjectguid=' + lessonId + '&courseguid='+courseId,
             '',
@@ -223,10 +227,7 @@ function bookLessonUser(lessonUser) {
 BlankTrainingData = {
     Course: {Summary: "[Blank Data]"},
     LessonUsers: [],
-    //Status: "Not started",
-    //completed: false,
-    //numCompleted: 0,
-    blank: true
+    extraTrainingInfo: {blank: true}
 };
 
 LearningRecordStatuses = {
