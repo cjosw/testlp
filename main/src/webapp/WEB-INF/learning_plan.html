@@ -12,6 +12,7 @@
 <body>
 <script type='text/javascript' src='scripts/lib/jquery/jquery-1.11.0.min.js'></script>
 <script type='text/javascript' src='scripts/lib/knockout/knockout-3.2.0.min.js'></script>
+<script type='text/javascript' src='scripts/lib/moment/moment.min.js'></script>
 <script type='text/javascript' src='scripts/main.js'></script>
 <script type='text/javascript' src='scripts/knockout-customisations.js'></script>
 <script type='text/javascript' src='scripts/training.js'></script>
@@ -125,7 +126,7 @@
                                     <tr>
                                         <td>
                                             <div data-bind="if: !extraTrainingInfo.expanded()">
-                                                <button data-bind="click: expandTrainingData" type="button" class="btn btn-primary btn-sm lp_view_info_btn">View Info</button>
+                                                <button data-bind="click: expandTrainingData, enable: PrerequisitesMet" type="button" class="btn btn-primary btn-sm lp_view_info_btn">View Info</button>
                                             </div>
                                             <div data-bind="if: extraTrainingInfo.expanded()">
                                                 <button data-bind="click: collapseTrainingData" type="button" class="btn btn-primary btn-sm lp_hide_info_btn">

@@ -116,7 +116,7 @@ img.lp_heading_content {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.lp_view_info_btn {
+.lp_view_info_btn, .lp_view_info_btn:disabled {
     border-color: white;
     background-color: white;
     color: #218DC3;

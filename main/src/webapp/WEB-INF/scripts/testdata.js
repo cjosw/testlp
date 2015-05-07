@@ -40,6 +40,7 @@ function getTrainingData(categoryName, num) {
                 }
             }
         ],
+        PrerequisitesMet: true,
         Status: "Not started"
     };
     if (num == 1) {
@@ -61,6 +62,10 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Failed;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Withdrawn;
+    }
+    if (num == 5) {
+        training_data.Course.Summary = "Course 5 (Prerequisites not met)";
+        training_data.PrerequisitesMet = false;
     }
     return training_data;
 }

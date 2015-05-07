@@ -18,12 +18,30 @@ function trainingLoadedSuccess(result, status, xhr) {
         console.log("Got " + training_data_list.length + " training data courses in total");
     }
     addInitialOrderingForSortStability(training_data_list);
+    training_data_list = filterOutByDates(training_data_list);
+    console.log("Got " + training_data_list.length + " training data courses after filtering by date");
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
     updateStaticDataOnTrainingPlans(sorted);
     var progress = getOverallProgress(sorted);
     learning_plan.initial_plan(sorted);
     learning_plan.progress(""+progress+"%");
     learning_plan.category_plan(structurePlanIntoCategoriesAndRows(sorted));
+}
+
+function filterOutByDates(training_data_list) {
+    return training_data_list.filter(isTrainingTrainingDataWithinDateRange);
+}
+
+function isTrainingTrainingDataWithinDateRange(training_data) {
+    if (training_data.ExpiryDate) {
+        var expiryDate = moment(training_data.ExpiryDate); // the date is in ISO 8601 format :-)
+        if (expiryDate.isBefore()) { return false; }
+    }
+    if (training_data.DateAvailable) {
+        var dateAvailable = moment(training_data.DateAvailable); // the date is in ISO 8601 format :-)
+        if (dateAvailable.isAfter()) { return false; }
+    }
+    return true;
 }
 
 function updateStaticDataOnTrainingPlans(training_data_list) {
