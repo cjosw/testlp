@@ -204,18 +204,31 @@
                                 <div class="col-md-3 lp_course_lesson_button_container">
                                     <!--(<span data-bind="text: extraLessonInfo.status"></span>)-->
                                     <!--(<span data-bind="text: extraLessonInfo.isOnline"></span>)-->
-                                    <!-- ko if: extraLessonInfo.completed -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.COMPLETED -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_completed_btn" disabled="disabled">Completed</button>
                                     <!-- /ko -->
-                                    <!-- ko if: extraLessonInfo.cancelled -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.CANCELLED -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_cancelled_btn" disabled="disabled">Cancelled</button>
                                     <!-- /ko -->
-                                    <!-- ko if: extraLessonInfo.bookable -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.AVAILABLE_TO_BOOK -->
                                         <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">Book</button>
                                     <!-- /ko -->
-                                    <!-- ko if: extraLessonInfo.inprogress -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.BOOKED -->
                                         <button type="button" class="btn btn-sm lp_course_inprogress_btn" disabled="disabled">
                                             <span class="glyphicon glyphicon-ok"></span> Booked
+                                        </button>
+                                    <!-- /ko -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.ONLINE_NOT_STARTED -->
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">Not Started</button>
+                                    <!-- /ko -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.ONLINE_IN_PROGRESS -->
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">
+                                            <span class="glyphicon glyphicon-play"></span> In Progress
+                                        </button>
+                                    <!-- /ko -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.UNKNOWN -->
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">
+                                            Book (status: <span data-bind="text: extraLessonInfo.status"></span>)
                                         </button>
                                     <!-- /ko -->
                                 </div>

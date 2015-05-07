@@ -40,20 +40,18 @@ function updateStaticDataOnTrainingPlan(training_data) {
     for (var l = 0; l < training_data.LessonUsers.length; l++) {
         var lessonUser = training_data.LessonUsers[l];
         var status = getLessonUserStatus(lessonUser);
+        var isLessonOnline = isOnlineLesson(lessonUser.Lesson.Type);
         var extraLessonInfo = {
             status: status,
-            completed: (status == LearningRecordStatuses.Complete),
-            cancelled: (status == LearningRecordStatuses.Cancelled),
-            bookable:  (status == LearningRecordStatuses.NotStarted) || (status == LearningRecordStatuses.Unknown),
+            visibleStatus: categoriseStatus(status, isLessonOnline),
             stars: [0,0,0,0,0],
-            isOnline: isOnlineLesson(lessonUser.Lesson.Type),
+            isOnline: isLessonOnline,
             parentTrainingData: training_data
         };
-        extraLessonInfo.inprogress = !(extraLessonInfo.completed || extraLessonInfo.cancelled || extraLessonInfo.bookable);
         lessonUser.extraLessonInfo = extraLessonInfo;
         lessonUser.Lesson.lessonId = getTrailingGuid(lessonUser.Lesson.Id);
-        isOnline = isOnline || extraLessonInfo.isOnline;
-        if (extraLessonInfo.completed) { numCompleted++; }
+        isOnline = isOnline || isLessonOnline;
+        if (extraLessonInfo.visibleStatus == VisibleStatuses.COMPLETED) { numCompleted++; }
     }
 
     var extraTrainingInfo = {
@@ -69,10 +67,24 @@ function updateStaticDataOnTrainingPlan(training_data) {
 
 function getLessonUserStatus(lessonUser) {
     var status = lessonUser.ShowBestScoreOnLearningPlan ? lessonUser.BestStatus : lessonUser.LastStatus;
-    if (status == null || status == "") {
-        status = LearningRecordStatuses.Unknown;
-    }
     return status;
+}
+
+function categoriseStatus(status, isOnline) {
+    switch (status) {
+        case LearningRecordStatuses.Cancelled:
+            return VisibleStatuses.CANCELLED;
+        case LearningRecordStatuses.Complete:
+            return VisibleStatuses.COMPLETED;
+        case LearningRecordStatuses.NotStarted:
+        case null:
+            return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : VisibleStatuses.AVAILABLE_TO_BOOK;
+        case LearningRecordStatuses.Incomplete:
+        case "":
+            return isOnline ? VisibleStatuses.ONLINE_IN_PROGRESS : VisibleStatuses.BOOKED;
+        default:
+            return VisibleStatuses.UNKNOWN;
+    }
 }
 
 function isOnlineLesson(lessonType) {
@@ -244,6 +256,16 @@ LearningRecordStatuses = {
     Withdrawn: 10,
     NotStarted: 11,
     Unknown: 12
+};
+
+VisibleStatuses = {
+    AVAILABLE_TO_BOOK: 0,
+    BOOKED: 1,
+    ONLINE_NOT_STARTED: 2,
+    ONLINE_IN_PROGRESS: 3,
+    COMPLETED: 4,
+    CANCELLED: 5,
+    UNKNOWN: 6
 };
 
 LessonTypes = {

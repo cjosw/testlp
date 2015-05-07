@@ -201,6 +201,7 @@ img.lp_heading_content {
     border-right-width:  2px;
 }
 .lp_course_bookable_btn:hover, .lp_course_bookable_btn:active, .lp_course_bookable_btn:focus,
+.lp_course_bookable_btn:hover span, .lp_course_bookable_btn:hover span, .lp_course_bookable_btn:focus span,
 .lp_course_inprogress_btn, .lp_course_inprogress_btn span {
     background-color: green !important;
     color: white;

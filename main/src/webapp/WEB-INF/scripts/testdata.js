@@ -49,12 +49,18 @@ function getTrainingData(categoryName, num) {
     }
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
+        training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
     }
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Complete;
         training_data.Course.Summary = "Course 3 which is a very long name which needs truncating";
+    }
+    if (num == 4) {
+        training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Failed;
+        training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
+        training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Withdrawn;
     }
     return training_data;
 }
