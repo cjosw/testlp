@@ -1,5 +1,5 @@
 function loadTrainingPlan(userId) {
-    if (useDummyTrainingData) {
+    if (!useRealTrainingData) {
         console.log("Loading dummy training plan ...")
         trainingLoadedSuccess([])
     } else {
@@ -9,8 +9,12 @@ function loadTrainingPlan(userId) {
 }
 
 function trainingLoadedSuccess(result, status, xhr) {
-    console.log("Got n courses: " + result.length);
-    var training_data_list = result.concat(getTestTrainingData());
+    var training_data_list = result;
+    console.log("Got " + training_data_list.length + " courses of real training data");
+    if (useDummyTrainingData) {
+        training_data_list = training_data_list.concat(getTestTrainingData());
+        console.log("Got " + training_data_list.length + " courses after adding dummy data");
+    }
     addInitialOrderingForSortStability(training_data_list);
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
     updateStaticDataOnTrainingPlans(sorted);
