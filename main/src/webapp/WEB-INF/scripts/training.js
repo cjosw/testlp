@@ -222,18 +222,23 @@ function collapseTrainingData(training_data) {
 }
 
 function bookLessonUser(lessonUser) {
+    var lessonId = lessonUser.Lesson.lessonId;
+    var courseId = lessonUser.extraLessonInfo.parentTrainingData.Course.courseId;
+    var url = "";
     if (lessonUser.extraLessonInfo.isOnline) {
-        var lessonId = lessonUser.Lesson.lessonId;
-        var courseId = lessonUser.extraLessonInfo.parentTrainingData.Course.courseId;
         console.log("About to launch online course; lessonId: " + lessonId + "; courseId: " + courseId);
-        window.open(rootUIUrl + 'student/frmLaunchLesson.aspx?StandardReset=true&url=&learningobjectguid=' + lessonId + '&courseguid='+courseId,
-            '',
-            'toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,left=0,screenX=0,top=0,screenY=0,width='
-            + (screen.availWidth - 10) + ',height=' + (screen.availHeight - 20)
-        );
+        url = 'student/frmLaunchLesson.aspx?StandardReset=true&url=&learningobjectguid=' + lessonId + '&courseguid='+courseId;
     } else {
-        console.log("About to launch booking page for non-online course");
+        console.log("About to launch course booking; lessonId: " + lessonId + "; courseId: " + courseId);
+        url = 'PortalLink.aspx?PortalSection=LearningPlan&PortalPage=LearningEventList&CourseGuid='+courseId+'&LearningObjectGuid=' + lessonId;
     }
+    console.log("Launching URL: " + url);
+    console.log("Full URL: " + rootUIUrl + url);
+    window.open(rootUIUrl + url,
+        '',
+        'toolbar=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,left=0,screenX=0,top=0,screenY=0,width='
+        + (screen.availWidth - 10) + ',height=' + (screen.availHeight - 20)
+    );
 }
 
 BlankTrainingData = {
