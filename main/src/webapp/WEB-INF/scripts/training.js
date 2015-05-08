@@ -78,7 +78,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         var isLessonOnline = isOnlineLesson(lessonUser.Lesson.Type);
         var extraLessonInfo = {
             status: status,
-            visibleStatus: categoriseStatus(status, isLessonOnline),
+            visibleStatus: categoriseStatus(status, isLessonOnline, lessonUser),
             stars: [0,0,0,0,0],
             isOnline: isLessonOnline,
             parentTrainingData: training_data
@@ -105,13 +105,14 @@ function getLessonUserStatus(lessonUser) {
     return status;
 }
 
-function categoriseStatus(status, isOnline) {
+function categoriseStatus(status, isOnline, lessonUser) {
     switch (status) {
         case LearningRecordStatuses.Cancelled:
             return VisibleStatuses.CANCELLED;
         case LearningRecordStatuses.Complete:
             return VisibleStatuses.COMPLETED;
         case LearningRecordStatuses.NotStarted:
+            return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : (isLessonEventBooked(lessonUser) ? VisibleStatuses.BOOKED : VisibleStatuses.AVAILABLE_TO_BOOK);
         case null:
             return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : VisibleStatuses.AVAILABLE_TO_BOOK;
         case LearningRecordStatuses.Incomplete:
@@ -120,6 +121,11 @@ function categoriseStatus(status, isOnline) {
         default:
             return VisibleStatuses.UNKNOWN;
     }
+}
+
+function isLessonEventBooked(lessonUser) {
+    return lessonUser.ChildEventUsers &&
+        lessonUser.ChildEventUsers.some(function(eventUser){ return eventUser.Status == EventUserStatuses.Booked; });
 }
 
 function isOnlineLesson(lessonType) {
@@ -326,20 +332,32 @@ BlankTrainingData = {
     extraTrainingInfo: {blank: true}
 };
 
+// These are listed in the API with numerical values, but in fact they appear as strings
 LearningRecordStatuses = {
-    Exempt: 0,
-    Complete: 1,
-    Passed: 2,
-    Attended: 3,
-    Failed: 4,
-    Browsed: 5,
-    Cancelled: 6,
-    Declined: 7,
-    DidNotAttend: 8,
-    Incomplete: 9,
-    Withdrawn: 10,
-    NotStarted: 11,
-    Unknown: 12
+    Exempt: "Exemppt",
+    Complete: "Complete",
+    Passed: "Passed",
+    Attended: "Attended",
+    Failed: "Failed",
+    Browsed: "Browsed",
+    Cancelled: "Cancelled",
+    Declined: "Declined",
+    DidNotAttend: "Did Not Attend",
+    Incomplete: "Incomplete",
+    Withdrawn: "Withdrawn",
+    NotStarted: "Not started",
+    Unknown: "Unknown"
+};
+
+TrainingDataStatuses = {
+    NotStarted: "Not started",
+    InProgress: "In progress",
+    Complete: "Complete"
+};
+
+EventUserStatuses = {
+    Booked: "Booked",
+    Unknown: "Unknown"
 };
 
 VisibleStatuses = {
