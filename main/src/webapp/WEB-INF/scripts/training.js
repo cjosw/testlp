@@ -29,9 +29,7 @@ function trainingLoadedSuccess(result, status, xhr) {
 }
 
 function addInitialOrderingForSortStability(training_data_list) {
-    for (var t = 0; t < training_data_list.length; t++) {
-        training_data_list[t].sortOrder = t;
-    }
+    training_data_list.forEach(function(training_data, index) { training_data.sortOrder = index; });
 }
 
 function filterOutByDates(training_data_list) {
@@ -62,11 +60,10 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
 }
 
 function updateStaticDataOnTrainingPlans(training_data_list) {
-    for (var t = 0; t < training_data_list.length; t++) {
-        var training_data = training_data_list[t];
+    training_data_list.forEach(function(training_data, index) {
         updateStaticDataOnTrainingPlan(training_data);
-        training_data.imageName = getDummyCourseImageName(t);
-    }
+        training_data.imageName = getDummyCourseImageName(index);
+    });
 }
 
 function updateStaticDataOnTrainingPlan(training_data) {
@@ -145,11 +142,10 @@ function isOnlineLesson(lessonType) {
 function getOverallProgress(training_data_list) {
     var numLessons = 0;
     var numCompleted = 0;
-    for (var t = 0; t < training_data_list.length; t++) {
-        var training_data = training_data_list[t];
+    training_data_list.forEach(function(training_data) {
         numLessons += training_data.LessonUsers.length;
         numCompleted += training_data.extraTrainingInfo.numCompleted;
-    }
+    });
     return Math.round((numCompleted / numLessons) * 100);
 }
 
@@ -301,10 +297,7 @@ function collapseTrainingData(training_data) {
 }
 
 function collapseAllTrainingData() {
-    var training_data_list = learning_plan.initial_plan();
-    for (var t = 0; t < training_data_list.length; t++) {
-        training_data_list[t].extraTrainingInfo.expanded(false);
-    }
+    learning_plan.initial_plan().forEach(function(training_data) { training_data.extraTrainingInfo.expanded(false); });
 }
 
 function bookLessonUser(lessonUser) {
