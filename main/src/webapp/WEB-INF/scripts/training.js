@@ -28,6 +28,12 @@ function trainingLoadedSuccess(result, status, xhr) {
     learning_plan.filters.categoryOptions(getCategoryNamesForFilter(sorted));
 }
 
+function addInitialOrderingForSortStability(training_data_list) {
+    for (var t = 0; t < training_data_list.length; t++) {
+        training_data_list[t].sortOrder = t;
+    }
+}
+
 function filterOutByDates(training_data_list) {
     return training_data_list.filter(isTrainingTrainingDataWithinDateRange);
 }
@@ -42,6 +48,17 @@ function isTrainingTrainingDataWithinDateRange(training_data) {
         if (dateAvailable.isAfter()) { return false; }
     }
     return true;
+}
+
+function compareTrainingByCategoryName(training_data_a, training_data_b) {
+    var aCategory = training_data_a.CourseCategory;
+    var bCategory = training_data_b.CourseCategory;
+    if (!aCategory && !bCategory) return (training_data_a.sortOrder - training_data_b.sortOrder);
+    if (!aCategory) return 1; // null categories get sorted to the end
+    if (!bCategory) return -1;
+    var aName = aCategory.Title;
+    var bName = bCategory.Title;
+    return ((aName < bName) ? -1 : ((aName > bName) ? 1 : (training_data_a.sortOrder - training_data_b.sortOrder)));
 }
 
 function updateStaticDataOnTrainingPlans(training_data_list) {
@@ -118,23 +135,6 @@ function isOnlineLesson(lessonType) {
     }
 }
 
-function addInitialOrderingForSortStability(training_data_list) {
-    for (var t = 0; t < training_data_list.length; t++) {
-        training_data_list[t].sortOrder = t;
-    }
-}
-
-function compareTrainingByCategoryName(training_data_a, training_data_b) {
-    var aCategory = training_data_a.CourseCategory;
-    var bCategory = training_data_b.CourseCategory;
-    if (!aCategory && !bCategory) return (training_data_a.sortOrder - training_data_b.sortOrder);
-    if (!aCategory) return 1; // null categories get sorted to the end
-    if (!bCategory) return -1;
-    var aName = aCategory.Title;
-    var bName = bCategory.Title;
-    return ((aName < bName) ? -1 : ((aName > bName) ? 1 : (training_data_a.sortOrder - training_data_b.sortOrder)));
-}
-
 function getOverallProgress(training_data_list) {
     var numLessons = 0;
     var numCompleted = 0;
@@ -160,39 +160,44 @@ function getCategoryNamesForFilter(training_data_list) {
 }
 
 function assembleCategoryPlan(training_data_list, filters) {
-    if (!training_data_list || training_data_list.length == 0) {
+    if (!training_data_list) {
+        return undefined; // This means that we show a 'Loading...' message
+    }
+    if (training_data_list.length == 0) {
         return [];
     }
-    training_data_list = filterByUIFields(training_data_list, filters);
+    training_data_list = filterListByUIFields(training_data_list, filters);
     return structurePlanIntoCategoriesAndRows(training_data_list);
 }
 
-function filterByUIFields(training_data_list, filters) {
-    return training_data_list.filter(function(training_data) {
-        if (filters.showCompletedCoursesOnly() && !training_data.extraTrainingInfo.completed) {
-            return false;
-        }
-        if (filters.showOnlineCoursesOnly() && !training_data.extraTrainingInfo.isOnline) {
-            return false;
-        }
-        if (filters.categoryFilter()) {
-            if (filters.categoryFilter() == "No category") {
-                if (training_data.CourseCategory != null) {
-                    return false;
-                }
-            } else {
-                if ((training_data.CourseCategory == null) || (filters.categoryFilter() != training_data.CourseCategory.Title)) {
-                    return false;
-                }
+function filterListByUIFields(training_data_list, filters) {
+    return training_data_list.filter(function(training_data) { return trainingDataMatchesFilter(training_data, filters); });
+}
+
+function trainingDataMatchesFilter(training_data, filters) {
+    if (filters.showCompletedCoursesOnly() && !training_data.extraTrainingInfo.completed) {
+        return false;
+    }
+    if (filters.showOnlineCoursesOnly() && !training_data.extraTrainingInfo.isOnline) {
+        return false;
+    }
+    if (filters.categoryFilter()) {
+        if (filters.categoryFilter() == "No category") {
+            if (training_data.CourseCategory != null) {
+                return false;
+            }
+        } else {
+            if ((training_data.CourseCategory == null) || (filters.categoryFilter() != training_data.CourseCategory.Title)) {
+                return false;
             }
         }
-        if (filters.searchText()) {
-            var searchText = filters.searchText().toLowerCase();
-            var courseName = training_data.Course.Summary.toLowerCase();
-            return courseName.indexOf(searchText) != -1;
-        }
-        return true;
-    });
+    }
+    if (filters.searchText()) {
+        var searchText = filters.searchText().toLowerCase();
+        var courseName = training_data.Course.Summary.toLowerCase();
+        return courseName.indexOf(searchText) != -1;
+    }
+    return true;
 }
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {
@@ -260,14 +265,14 @@ function blankRow() {
 }
 
 function expandTrainingData(training_data) {
-    collapseTraningDataIfOpen();
+    collapseTrainingDataIfOpen();
     var row = training_data.extraTrainingInfo.enclosingRow;
     training_data.extraTrainingInfo.expanded(true);
     row.expanded(true);
     row.current_training(training_data);
 }
 
-function collapseTraningDataIfOpen() {
+function collapseTrainingDataIfOpen() {
     var category_plan_array = learning_plan.category_plan();
     for (var c = 0; c < category_plan_array.length; c++) {
         var category_plan = category_plan_array[c];
@@ -286,6 +291,13 @@ function collapseTrainingData(training_data) {
     var row = training_data.extraTrainingInfo.enclosingRow;
     training_data.extraTrainingInfo.expanded(false);
     row.expanded(false);
+}
+
+function collapseAllTrainingData() {
+    var training_data_list = learning_plan.initial_plan();
+    for (var t = 0; t < training_data_list.length; t++) {
+        training_data_list[t].extraTrainingInfo.expanded(false);
+    }
 }
 
 function bookLessonUser(lessonUser) {
