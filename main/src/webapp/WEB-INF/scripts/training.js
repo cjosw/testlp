@@ -116,6 +116,7 @@ function categoriseStatus(status, isOnline, lessonUser) {
         case null:
             return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : VisibleStatuses.AVAILABLE_TO_BOOK;
         case LearningRecordStatuses.Incomplete:
+        case LearningRecordStatuses.InProgress:
         case "":
             return isOnline ? VisibleStatuses.ONLINE_IN_PROGRESS : VisibleStatuses.BOOKED;
         default:
@@ -346,6 +347,7 @@ LearningRecordStatuses = {
     Incomplete: "Incomplete",
     Withdrawn: "Withdrawn",
     NotStarted: "Not started",
+    InProgress: "In progress", // online courses only?
     Unknown: "Unknown"
 };
 
