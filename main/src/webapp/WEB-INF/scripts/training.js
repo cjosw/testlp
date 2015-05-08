@@ -87,6 +87,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
     }
 
     var extraTrainingInfo = {
+        description: ko.observable(),
         numCompleted: numCompleted,
         completed: (numCompleted == training_data.LessonUsers.length),
         isOnline: isOnline,
@@ -273,6 +274,7 @@ function expandTrainingData(training_data) {
     training_data.extraTrainingInfo.expanded(true);
     row.expanded(true);
     row.current_training(training_data);
+    loadTrainingPlanDescription(training_data);
 }
 
 function collapseTrainingDataIfOpen() {
@@ -298,6 +300,24 @@ function collapseTrainingData(training_data) {
 
 function collapseAllTrainingData() {
     learning_plan.initial_plan().forEach(function(training_data) { training_data.extraTrainingInfo.expanded(false); });
+}
+
+function loadTrainingPlanDescription(training_data) {
+    if (training_data.extraTrainingInfo.description()) {
+        return;
+    }
+    loadCourse(training_data.Course.courseId,
+        function(data) {
+            var description = data.Description;
+            console.log("Retrieved course data; " + data.Title + "; description: " + description);
+            description = description || "[ No description supplied ]";
+            training_data.extraTrainingInfo.description(description);
+        },
+        function(msg) {
+            var description = "[ Failed to retrieve course description ]";
+            training_data.extraTrainingInfo.description(description);
+        }
+    );
 }
 
 function bookLessonUser(lessonUser) {

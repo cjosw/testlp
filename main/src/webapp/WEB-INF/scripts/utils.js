@@ -1,4 +1,4 @@
-function invokeAjax(url, successFn) {
+function invokeAjax(url, successFn, errorFn) {
     console.log("Invoking: " + url + " ...")
     $.ajax({
         url: url,
@@ -8,7 +8,11 @@ function invokeAjax(url, successFn) {
             return function(jqXHR, textStatus, errorThrown) {
                 msg = "Failed to retrieve URL: " + url + "; error: " + jqXHR.statusText;
                 console.log(msg);
-                learning_plan.errorMessage(msg);
+                if (errorFn) {
+                    errorFn(msg);
+                } else {
+                    learning_plan.errorMessage(msg);
+                }
             };
         })(this)
     });
