@@ -25,7 +25,7 @@ function trainingLoadedSuccess(result, status, xhr) {
     var progress = getOverallProgress(sorted);
     learning_plan.initial_plan(sorted);
     learning_plan.progress(""+progress+"%");
-    learning_plan.category_plan(structurePlanIntoCategoriesAndRows(sorted));
+    learning_plan.filters.categoryOptions(getCategoryNamesForFilter(sorted));
 }
 
 function filterOutByDates(training_data_list) {
@@ -144,6 +144,55 @@ function getOverallProgress(training_data_list) {
         numCompleted += training_data.extraTrainingInfo.numCompleted;
     }
     return Math.round((numCompleted / numLessons) * 100);
+}
+
+function getCategoryNamesForFilter(training_data_list) {
+    var arrayByCategoryName = groupByCategories(training_data_list);
+    var categoryNames = [];
+    for (var categoryName in arrayByCategoryName) {
+        if (categoryName == "") {
+            categoryNames.push("No category");
+        } else {
+            categoryNames.push(categoryName);
+        }
+    }
+    return categoryNames;
+}
+
+function assembleCategoryPlan(training_data_list, filters) {
+    if (!training_data_list || training_data_list.length == 0) {
+        return [];
+    }
+    training_data_list = filterByUIFields(training_data_list, filters);
+    return structurePlanIntoCategoriesAndRows(training_data_list);
+}
+
+function filterByUIFields(training_data_list, filters) {
+    return training_data_list.filter(function(training_data) {
+        if (filters.showCompletedCoursesOnly() && !training_data.extraTrainingInfo.completed) {
+            return false;
+        }
+        if (filters.showOnlineCoursesOnly() && !training_data.extraTrainingInfo.isOnline) {
+            return false;
+        }
+        if (filters.categoryFilter()) {
+            if (filters.categoryFilter() == "No category") {
+                if (training_data.CourseCategory != null) {
+                    return false;
+                }
+            } else {
+                if ((training_data.CourseCategory == null) || (filters.categoryFilter() != training_data.CourseCategory.Title)) {
+                    return false;
+                }
+            }
+        }
+        if (filters.searchText()) {
+            var searchText = filters.searchText().toLowerCase();
+            var courseName = training_data.Course.Summary.toLowerCase();
+            return courseName.indexOf(searchText) != -1;
+        }
+        return true;
+    });
 }
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {

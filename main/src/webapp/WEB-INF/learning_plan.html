@@ -44,7 +44,7 @@
         <div class="col-md-2 lp_heading_content">
             <table>
                 <tr>
-                    <div class="lp_heading_text_container" data-bind="with: learning_plan.user">
+                    <div class="lp_heading_text_container" data-bind="with: user">
                         <span>Hi, <span data-bind="text: FirstName"></span></span>
                     </div>
                 </tr>
@@ -53,14 +53,14 @@
                         <div class="progress-bar lp_progress_bar_background" role="progressbar"
                              aria-valuemin="0" aria-valuemax="100" style="width:100%">
                             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                 data-bind="style: { 'width': learning_plan.progress() }">
+                                 data-bind="style: { 'width': progress() }">
                             </div>
                         </div>
                     </div>
                 </tr>
                 <tr>
                     <span class="lp_heading_summary_container">
-                        <span class="pull-right"><span data-bind="text: learning_plan.progress"></span></span>
+                        <span class="pull-right"><span data-bind="text: progress"></span></span>
                     </span>
                 </tr>
             </table>
@@ -69,11 +69,64 @@
         </div>
     </div>
 
-    <div class="error" data-bind="visible: learning_plan.errorMessage()">
-        <span data-bind="text: learning_plan.errorMessage"/>
+    <div class="row lp_filter_bar" data-bind="with: filters">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText">
+                    <span class="input-group-addon glyphicon glyphicon-search"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <select type="text" class="form-control"
+                    data-bind="value: categoryFilter,
+                                        options: categoryOptions,
+                                        optionsCaption: 'All Categories'">
+            </select>
+        </div>
+        <div class="col-md-2">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: showCompletedCoursesOnly">
+                    Show completed courses
+                </label>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" data-bind="checked: showOnlineCoursesOnly">
+                    Show online courses only
+                </label>
+            </div>
+        </div>
     </div>
 
-    <!-- ko foreach: learning_plan.category_plan -->
+    <div class="error" data-bind="visible: errorMessage()">
+        <span data-bind="text: errorMessage"/>
+    </div>
+
+    <!-- ko if: !category_plan() || category_plan().length == 0-->
+    <div class="lp_category_section">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 lp_category_section_header">
+                    <!-- ko if: !category_plan() -->
+                    Loading Training Data ...
+                    <!-- /ko -->
+                    <!-- ko if: category_plan() -->
+                    No Training Data found
+                    <!-- /ko -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+
+    <!-- ko foreach: category_plan -->
     <div class="lp_category_section">
         <div class="row">
             <div class="col-md-12">
@@ -82,7 +135,7 @@
                     <span data-bind="text: categoryName"></span>
                     <!-- /ko -->
                     <!-- ko if: !categoryName -->
-                    [ No Category specified ]
+                    [ No category ]
                     <!-- /ko -->
                 </div>
             </div>

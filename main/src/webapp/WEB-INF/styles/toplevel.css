@@ -71,6 +71,10 @@ img.lp_heading_content {
     height: 100%;
 }
 
+.lp_filter_bar {
+    margin-top: 15px;
+}
+
 .lp_category_section * {
     background-color: #ECEFF4;
 }

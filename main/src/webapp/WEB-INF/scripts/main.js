@@ -1,10 +1,20 @@
 // This is a simple *viewmodel* - JavaScript that defines the data and behavior of your UI
 function LearningPlanViewModel() {
-    this.user = ko.observable();
-    this.progress = ko.observable();
-    this.initial_plan = ko.observable();
-    this.category_plan = ko.observable();
-    this.errorMessage = ko.observable();
+    var self = this;
+    self.user = ko.observable();
+    self.progress = ko.observable();
+    self.initial_plan = ko.observable();
+    self.errorMessage = ko.observable();
+
+    self.filters = {
+        searchText: ko.observable(),
+        categoryFilter: ko.observable(),
+        categoryOptions: ko.observable(),
+        showCompletedCoursesOnly: ko.observable(false),
+        showOnlineCoursesOnly: ko.observable(false)
+    };
+
+    self.category_plan = ko.pureComputed(function() { return assembleCategoryPlan(self.initial_plan(), self.filters); });
 }
 
 function startup() {

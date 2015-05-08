@@ -7,10 +7,11 @@ function getTestTrainingData() {
 }
 
 function getTrainingData(categoryName, num) {
-    var lessonType = ((num % 2) == 0) ? LessonTypes.Scorm : LessonTypes.Classroom;
+    var online = (num % 2) == 0;
+    var lessonType = online ? LessonTypes.Scorm : LessonTypes.Classroom;
     var training_data = {
         CourseCategory: {Title: categoryName},
-        Course: {Summary: "Course " + num, Id: "course-" + num + "-guid"},
+        Course: {Summary: "Course " + num + (online ? " (online)" : ""), Id: "course-" + num + "-guid"},
         LessonUsers: [
             {
                 ShowBestScoreOnLearningPlan: true,
@@ -56,12 +57,13 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Complete;
-        training_data.Course.Summary = "Course 3 which is a very long name which needs truncating";
+        training_data.Course.Summary = "Course 3 (completed) which is a very long name which needs truncating";
     }
     if (num == 4) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Failed;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Withdrawn;
+        training_data.Course.Summary = "Course 4 (online) with odd statuses";
     }
     if (num == 5) {
         training_data.Course.Summary = "Course 5 (Prerequisites not met)";
