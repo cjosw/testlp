@@ -2,6 +2,7 @@
 function LearningPlanViewModel() {
     var self = this;
     self.user = ko.observable();
+    self.userImageSrc = ko.observable();
     self.progress = ko.observable();
     self.initial_plan = ko.observable();
     self.errorMessage = ko.observable();
@@ -34,6 +35,7 @@ function decodeQueryParams() {
     userId     = decodeQueryParam(params, "userId",     '{CurrentUser}');
     rootAPIUrl = decodeQueryParam(params, "rootAPIUrl", 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/');
     rootUIUrl  = decodeQueryParam(params, "rootUIUrl",  'http://dev.kallidus.com/DevEval/LMS/');
+    rootImagesUrl  = decodeQueryParam(params, "rootImagesUrl",  'https://rawgit.com/cjosw/testlp/grid/main/src/webapp/WEB-INF/');
     coursesPerRow        = decodeIntQueryParam(params, "coursesPerRow", 6);
     useDummyUser         = decodeBooleanQueryParam(params, "useDummyUser", "false");
     useRealTrainingData  = decodeBooleanQueryParam(params, "useRealTrainingData", "true");
