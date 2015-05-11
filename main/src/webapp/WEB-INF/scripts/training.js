@@ -30,7 +30,7 @@ function updateStaticDataOnTrainingPlans(training_data_list) {
     for (var t = 0; t < training_data_list.length; t++) {
         var training_data = training_data_list[t];
         updateStaticDataOnTrainingPlan(training_data);
-        training_data.imageName = getDummyCourseImageName(t);
+        training_data.imageName = rootImagesUrl + getDummyCourseImageName(t);
     }
 }
 
