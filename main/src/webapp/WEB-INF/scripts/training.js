@@ -287,6 +287,7 @@ function collapseTrainingDataIfOpen() {
             if (row.expanded()) {
                 row.current_training().extraTrainingInfo.expanded(false);
                 row.expanded(false);
+                row.current_training(undefined);
             }
         }
     }
@@ -296,10 +297,15 @@ function collapseTrainingData(training_data) {
     var row = training_data.extraTrainingInfo.enclosingRow;
     training_data.extraTrainingInfo.expanded(false);
     row.expanded(false);
+    row.current_training(undefined);
 }
 
 function collapseAllTrainingData() {
-    learning_plan.initial_plan().forEach(function(training_data) { training_data.extraTrainingInfo.expanded(false); });
+    learning_plan.initial_plan().forEach(function(training_data) {
+        if (training_data.extraTrainingInfo.expanded()) {
+            collapseTrainingData(training_data);
+        }
+    });
 }
 
 function loadTrainingPlanDescription(training_data) {
