@@ -312,6 +312,10 @@ function loadTrainingPlanDescription(training_data) {
     if (training_data.extraTrainingInfo.description()) {
         return;
     }
+    if (useDummyTrainingData && training_data.DummyDescription) {
+        training_data.extraTrainingInfo.description(training_data.DummyDescription);
+        return;
+    }
     loadCourse(training_data.Course.courseId,
         function(data) {
             var description = data.Description;
