@@ -62,7 +62,7 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
 function updateStaticDataOnTrainingPlans(training_data_list) {
     training_data_list.forEach(function(training_data, index) {
         updateStaticDataOnTrainingPlan(training_data);
-        training_data.imageName = rootImagesUrl + getDummyCourseImageName(index);
+        training_data.imageName = rootContentUrl + getDummyCourseImageName(index);
     });
 }
 

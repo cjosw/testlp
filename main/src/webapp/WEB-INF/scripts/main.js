@@ -35,7 +35,7 @@ function decodeQueryParams(options) {
     userId     = decodeQueryParam(params, "userId",     options.userId, '{CurrentUser}');
     rootAPIUrl = decodeQueryParam(params, "rootAPIUrl", options.rootAPIUrl, 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/');
     rootUIUrl  = decodeQueryParam(params, "rootUIUrl",  options.rootUIUrl, 'http://dev.kallidus.com/DevEval/LMS/');
-    rootImagesUrl  = decodeQueryParam(params, "rootImagesUrl",  options.rootImagesUrl, 'https://rawgit.com/cjosw/testlp/grid/main/src/webapp/WEB-INF/');
+    rootContentUrl  = decodeQueryParam(params, "rootContentUrl",  options.rootContentUrl, 'https://rawgit.com/cjosw/testlp/grid/main/src/webapp/WEB-INF/');
     coursesPerRow        = decodeIntQueryParam(params,     "coursesPerRow",        options.coursesPerRow, 6);
     useDummyUser         = decodeBooleanQueryParam(params, "useDummyUser",         options.useDummyUser, "false");
     useRealTrainingData  = decodeBooleanQueryParam(params, "useRealTrainingData",  options.useRealTrainingData, "true");
