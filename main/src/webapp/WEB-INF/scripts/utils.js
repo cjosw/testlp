@@ -33,15 +33,15 @@ function retrieveURLQueryParams(){
     return result;
 }
 
-function decodeQueryParam(params, key, default_val) {
+function decodeQueryParam(params, key, option_val, default_val) {
     var param = params[key];
-    return param ? param : default_val;
+    return param ? param : (option_val ? option_val : default_val);
 }
 
-function decodeIntQueryParam(params, key, default_val) {
-    return parseInt(decodeQueryParam(params, key, default_val));
+function decodeIntQueryParam(params, key, option_val, default_val) {
+    return parseInt(decodeQueryParam(params, key, option_val, default_val));
 }
 
-function decodeBooleanQueryParam(params, key, default_val) {
-    return decodeQueryParam(params, key, default_val) == "true";
+function decodeBooleanQueryParam(params, key, option_val, default_val) {
+    return decodeQueryParam(params, key, option_val, default_val) == "true";
 }

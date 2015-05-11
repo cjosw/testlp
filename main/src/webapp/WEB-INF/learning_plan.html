@@ -315,7 +315,16 @@
     </div>
 
     <script type="text/javascript">
-        startup()
+        var options = {
+            userId: "" /* {CurrentUser} */
+            ,rootAPIUrl: 'https://dev.kallidus.com/DevEval/LMS/Handlers/ApiProxy.ashx/'
+            ,rootUIUrl: 'http://dev.kallidus.com/DevEval/LMS/'
+            ,rootImagesUrl: 'https://rawgit.com/cjosw/testlp/grid/main/src/webapp/WEB-INF/'
+            ,useDummyUser: "false"
+            ,useRealTrainingData: "true"
+//            ,useDummyTrainingData: "true"
+        };
+        startup(options);
     </script>
 
 </div>
