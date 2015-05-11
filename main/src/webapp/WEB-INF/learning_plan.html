@@ -15,6 +15,7 @@
 <script type='text/javascript' src='scripts/lib/jquery/jquery-1.11.0.min.js'></script>
 <script type='text/javascript' src='scripts/lib/knockout/knockout-3.2.0.min.js'></script>
 <script type='text/javascript' src='scripts/lib/moment/moment.min.js'></script>
+<script type='text/javascript' src='scripts/lib/textoverflowclamp/TextOverflowClamp.js'></script>
 <script type='text/javascript' src='scripts/main.js'></script>
 <script type='text/javascript' src='scripts/knockout-customisations.js'></script>
 <script type='text/javascript' src='scripts/training.js'></script>
@@ -218,10 +219,13 @@
                         <div class="col-md-12 lp_course_expanded_name">
                             <span data-bind="text: Course.Summary"></span>
                         </div>
-                        <div class="col-md-12 lp_course_expanded_description">
-                            <p>
-                                <span data-bind="text: extraTrainingInfo.description"></span>
-                            </p>
+                        <div class="col-md-12 lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
+                            <!-- ko if: !extraTrainingInfo.descriptionExpanded() -->
+                                <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description()"></p>
+                            <!-- /ko -->
+                            <!-- ko if: extraTrainingInfo.descriptionExpanded() -->
+                                <p class="lp-paragraph-expanded" data-bind="text: extraTrainingInfo.description()"></p>
+                            <!-- /ko -->
                         </div>
                         <div class="col-md-12 lp_course_expanded_links">
                             <div class="col-md-3">

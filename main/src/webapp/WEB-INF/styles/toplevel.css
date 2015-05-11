@@ -172,6 +172,13 @@ img.lp_heading_content {
 .lp_course_expanded_description, .lp_course_expanded_links {
     margin-bottom: 15px;
 }
+.lp_course_expanded_description {
+    overflow: hidden;
+}
+.lp-paragraph-shrunk, .lp-paragraph-expanded {
+    margin: 0;
+    /* all the real styling is done using the TextOverflowClamp.js library. */
+}
 .lp_course_expanded_lessons {
 }
 .lp_course_expanded_lesson {

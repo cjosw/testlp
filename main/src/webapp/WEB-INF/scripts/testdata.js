@@ -55,7 +55,12 @@ function getTrainingData(categoryName, num) {
             "that it requires a strong moral principle to prevent me from deliberately stepping into the street, "+
             "and methodically knocking people's hats off- "+
             "then, I account it high time to get to a bookstore as soon as I can. "+
-            "That is my substitute for the pistol and ball.",
+            "That is my substitute for the pistol and ball."+
+            "With a philosophical flourish Cato throws himself upon his sword; "+
+            "I quietly take to the ship. There is nothing surprising in this. "+
+            "If they but knew it, almost all men in their degree, some time or other, "+
+            "cherish very nearly the same feelings towards the ocean with me."
+        ,
         Status: "Not started"
     };
     if (num == 1) {

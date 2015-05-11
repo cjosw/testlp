@@ -88,6 +88,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
 
     var extraTrainingInfo = {
         description: ko.observable(),
+        descriptionExpanded: ko.observable(false),
         numCompleted: numCompleted,
         completed: (numCompleted == training_data.LessonUsers.length),
         isOnline: isOnline,
@@ -275,6 +276,7 @@ function expandTrainingData(training_data) {
     row.expanded(true);
     row.current_training(training_data);
     loadTrainingPlanDescription(training_data);
+    clampTrainingDataDescription(training_data);
 }
 
 function collapseTrainingDataIfOpen() {
@@ -328,6 +330,24 @@ function loadTrainingPlanDescription(training_data) {
             training_data.extraTrainingInfo.description(description);
         }
     );
+}
+
+function clampTrainingDataDescription(training_data) {
+    training_data.extraTrainingInfo.descriptionExpanded(false);
+    var paragraphs = $('.lp_course_expanded_description .lp-paragraph-shrunk');
+    if (paragraphs) {
+        console.log("Clamping description to 3 lines of text...");
+        var paragraph = paragraphs[0];
+        clamp(paragraph, 3);
+    }
+}
+
+function toggleExpandedDescription(training_data) {
+    if (training_data.extraTrainingInfo.descriptionExpanded()) {
+        clampTrainingDataDescription(training_data);
+    } else {
+        training_data.extraTrainingInfo.descriptionExpanded(true);
+    }
 }
 
 function bookLessonUser(lessonUser) {
