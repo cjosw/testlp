@@ -276,7 +276,6 @@ function expandTrainingData(training_data) {
     row.expanded$(true);
     row.current_training$(training_data);
     loadTrainingPlanDescription(training_data);
-    clampTrainingDataDescription(training_data);
 }
 
 function collapseTrainingDataIfOpen() {
@@ -312,10 +311,12 @@ function collapseAllTrainingData() {
 
 function loadTrainingPlanDescription(training_data) {
     if (training_data.extraTrainingInfo.description$()) {
+        clampTrainingDataDescription(training_data);
         return;
     }
     if (useDummyTrainingData && training_data.DummyDescription) {
         training_data.extraTrainingInfo.description$(training_data.DummyDescription);
+        clampTrainingDataDescription(training_data);
         return;
     }
     loadCourse(training_data.Course.courseId,
@@ -324,6 +325,7 @@ function loadTrainingPlanDescription(training_data) {
             console.log("Retrieved course data; " + data.Title + "; description: " + description);
             description = description || "[ No description supplied ]";
             training_data.extraTrainingInfo.description$(description);
+            clampTrainingDataDescription(training_data);
         },
         function(msg) {
             var description = "[ Failed to retrieve course description ]";
