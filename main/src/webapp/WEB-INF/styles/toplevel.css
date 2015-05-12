@@ -211,6 +211,7 @@ img.lp_heading_content {
 .lp_course_expanded_text_box {
     width: 60%;
     padding-left: 20px;
+    vertical-align: top;
 }
 .lp_course_expanded_name {
     font-size: x-large;
