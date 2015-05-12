@@ -10,6 +10,6 @@ function loadUser(userId) {
 
 function userLoadedSuccess(result, status, xhr) {
     console.log("Got user: " + result.FirstName + " " + result.LastName);
-    learning_plan.user(result);
-    learning_plan.userImageSrc(rootContentUrl + "images/Mona_Lisa_cropped150.jpg");
+    learning_plan.user$(result);
+    learning_plan.userImageSrc$(rootContentUrl + "images/Mona_Lisa_cropped150.jpg");
 }

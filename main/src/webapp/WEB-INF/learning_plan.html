@@ -42,13 +42,13 @@
         </div>
         <div class="lp_heading_content lp_heading_image_container">
             <div class="lp_heading_cropper image-cropper">
-                <img class="lp_heading_content" data-bind="src: userImageSrc()">
+                <img class="lp_heading_content" data-bind="src: userImageSrc$()">
             </div>
         </div>
         <div class="lp_heading_content lp_heading_name_container">
             <table>
                 <tr>
-                    <div class="lp_heading_text_container" data-bind="with: user">
+                    <div class="lp_heading_text_container" data-bind="with: user$">
                         <span>Hi, <span data-bind="text: FirstName"></span></span>
                     </div>
                 </tr>
@@ -57,14 +57,14 @@
                         <div class="progress-bar lp_progress_bar_background" role="progressbar"
                              aria-valuemin="0" aria-valuemax="100" style="width:100%">
                             <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                 data-bind="style: { 'width': progress() }">
+                                 data-bind="style: { 'width': progress$() }">
                             </div>
                         </div>
                     </div>
                 </tr>
                 <tr>
                     <span class="lp_heading_summary_container">
-                        <span class="pull-right"><span data-bind="text: progress"></span></span>
+                        <span class="pull-right"><span data-bind="text: progress$"></span></span>
                     </span>
                 </tr>
             </table>
@@ -79,22 +79,22 @@
         <div class="lp_filter_search">
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText">
+                    <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText$">
                     <span class="input-group-addon glyphicon glyphicon-search"></span>
                 </div>
             </div>
         </div>
         <div class="lp_filter_categories">
             <select type="text" class="form-control"
-                    data-bind="value: categoryFilter,
-                                        options: categoryOptions,
+                    data-bind="value: categoryFilter$,
+                                        options: categoryOptions$,
                                         optionsCaption: 'All Categories'">
             </select>
         </div>
         <div class="lp_filter_completed">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" data-bind="checked: showCompletedCoursesOnly">
+                    <input type="checkbox" data-bind="checked: showCompletedCoursesOnly$">
                     Show completed courses
                 </label>
             </div>
@@ -102,33 +102,33 @@
         <div class="lp_filter_online">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" data-bind="checked: showOnlineCoursesOnly">
+                    <input type="checkbox" data-bind="checked: showOnlineCoursesOnly$">
                     Show online courses only
                 </label>
             </div>
         </div>
     </div>
 
-    <div class="error" data-bind="visible: errorMessage()">
-        <span data-bind="text: errorMessage"/>
+    <div class="error" data-bind="visible: errorMessage$()">
+        <span data-bind="text: errorMessage$"/>
     </div>
 
-    <!-- ko if: !category_plan() || category_plan().length == 0-->
+    <!-- ko if: !category_plan$() || category_plan$().length == 0-->
     <div class="lp_category_section">
         <div class="lp_category_header_left_margin">
         </div>
         <div class="lp_category_section_header">
-            <!-- ko if: !category_plan() -->
+            <!-- ko if: !category_plan$() -->
             Loading Training Data ...
             <!-- /ko -->
-            <!-- ko if: category_plan() -->
+            <!-- ko if: category_plan$() -->
             No Training Data found
             <!-- /ko -->
         </div>
     </div>
     <!-- /ko -->
 
-    <!-- ko foreach: category_plan -->
+    <!-- ko foreach: category_plan$ -->
     <div class="lp_category_section">
         <div class="lp_category_header_left_margin">
         </div>
@@ -176,10 +176,10 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <div data-bind="if: !extraTrainingInfo.expanded()">
+                                            <div data-bind="if: !extraTrainingInfo.expanded$()">
                                                 <button data-bind="click: expandTrainingData, enable: PrerequisitesMet" type="button" class="btn btn-primary btn-sm lp_view_info_btn">View Info</button>
                                             </div>
-                                            <div data-bind="if: extraTrainingInfo.expanded()">
+                                            <div data-bind="if: extraTrainingInfo.expanded$()">
                                                 <button data-bind="click: collapseTrainingData" type="button" class="btn btn-primary btn-sm lp_hide_info_btn">
                                                     <span class="glyphicon glyphicon-remove"></span>
                                                 </button>
@@ -189,8 +189,8 @@
                                     <tr>
                                         <td class="lp_expansion_row">
                                             <div class="lp_expansion_indicator">
-                                                <div data-bind="visible: !extraTrainingInfo.expanded()" class="arrow-up-hidden lp_expansion_centraliser"></div>
-                                                <div data-bind="visible:  extraTrainingInfo.expanded()" class="arrow-up        lp_expansion_centraliser"></div>
+                                                <div data-bind="visible: !extraTrainingInfo.expanded$()" class="arrow-up-hidden lp_expansion_centraliser"></div>
+                                                <div data-bind="visible:  extraTrainingInfo.expanded$()" class="arrow-up        lp_expansion_centraliser"></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -199,8 +199,8 @@
                         <!-- /ko -->
                     </tr>
                 </table>
-        <table class="lp_expanded_course" data-bind="visible: expanded()">
-            <tr class="lp_course_expanded_container" data-bind="with: current_training()">
+        <table class="lp_expanded_course" data-bind="visible: expanded$()">
+            <tr class="lp_course_expanded_container" data-bind="with: current_training$()">
                 <td class="lp_course_expanded_image_box">
                     <div class="pull-right">
                         <img class="lp_course_expanded_image" data-bind="src: imageName">
@@ -212,11 +212,11 @@
                             <span data-bind="text: Course.Summary"></span>
                         </div>
                         <div class="lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
-                            <!-- ko if: !extraTrainingInfo.descriptionExpanded() -->
-                                <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description()"></p>
+                            <!-- ko if: !extraTrainingInfo.descriptionExpanded$() -->
+                                <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description$()"></p>
                             <!-- /ko -->
-                            <!-- ko if: extraTrainingInfo.descriptionExpanded() -->
-                                <p class="lp-paragraph-expanded" data-bind="text: extraTrainingInfo.description()"></p>
+                            <!-- ko if: extraTrainingInfo.descriptionExpanded$() -->
+                                <p class="lp-paragraph-expanded" data-bind="text: extraTrainingInfo.description$()"></p>
                             <!-- /ko -->
                         </div>
                         <table class="lp_course_expanded_links">

@@ -11,7 +11,7 @@ function invokeAjax(url, successFn, errorFn) {
                 if (errorFn) {
                     errorFn(msg);
                 } else {
-                    learning_plan.errorMessage(msg);
+                    learning_plan.errorMessage$(msg);
                 }
             };
         })(this)

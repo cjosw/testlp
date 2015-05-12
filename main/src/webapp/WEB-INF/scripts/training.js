@@ -23,9 +23,9 @@ function trainingLoadedSuccess(result, status, xhr) {
     var sorted = training_data_list.sort(compareTrainingByCategoryName);
     updateStaticDataOnTrainingPlans(sorted);
     var progress = getOverallProgress(sorted);
-    learning_plan.initial_plan(sorted);
-    learning_plan.progress(""+progress+"%");
-    learning_plan.filters.categoryOptions(getCategoryNamesForFilter(sorted));
+    learning_plan.initial_plan$(sorted);
+    learning_plan.progress$(""+progress+"%");
+    learning_plan.filters.categoryOptions$(getCategoryNamesForFilter(sorted));
 }
 
 function addInitialOrderingForSortStability(training_data_list) {
@@ -87,13 +87,13 @@ function updateStaticDataOnTrainingPlan(training_data) {
     }
 
     var extraTrainingInfo = {
-        description: ko.observable(),
-        descriptionExpanded: ko.observable(false),
+        description$: ko.observable(),
+        descriptionExpanded$: ko.observable(false),
         numCompleted: numCompleted,
         completed: (numCompleted == training_data.LessonUsers.length),
         isOnline: isOnline,
         blank: false,
-        expanded: ko.observable(false)
+        expanded$: ko.observable(false)
     };
     training_data.extraTrainingInfo = extraTrainingInfo;
     training_data.Course.courseId = getTrailingGuid(training_data.Course.Id);
@@ -180,25 +180,25 @@ function filterListByUIFields(training_data_list, filters) {
 }
 
 function trainingDataMatchesFilter(training_data, filters) {
-    if (filters.showCompletedCoursesOnly() && !training_data.extraTrainingInfo.completed) {
+    if (filters.showCompletedCoursesOnly$() && !training_data.extraTrainingInfo.completed) {
         return false;
     }
-    if (filters.showOnlineCoursesOnly() && !training_data.extraTrainingInfo.isOnline) {
+    if (filters.showOnlineCoursesOnly$() && !training_data.extraTrainingInfo.isOnline) {
         return false;
     }
-    if (filters.categoryFilter()) {
-        if (filters.categoryFilter() == "No category") {
+    if (filters.categoryFilter$()) {
+        if (filters.categoryFilter$() == "No category") {
             if (training_data.CourseCategory != null) {
                 return false;
             }
         } else {
-            if ((training_data.CourseCategory == null) || (filters.categoryFilter() != training_data.CourseCategory.Title)) {
+            if ((training_data.CourseCategory == null) || (filters.categoryFilter$() != training_data.CourseCategory.Title)) {
                 return false;
             }
         }
     }
-    if (filters.searchText()) {
-        var searchText = filters.searchText().toLowerCase();
+    if (filters.searchText$()) {
+        var searchText = filters.searchText$().toLowerCase();
         var courseName = training_data.Course.Summary.toLowerCase();
         return courseName.indexOf(searchText) != -1;
     }
@@ -264,32 +264,32 @@ function groupCategoriesIntoRows(arrayByCategoryName) {
 function blankRow() {
     return {
         courses: [],
-        expanded: ko.observable(false),
-        current_training: ko.observable()
+        expanded$: ko.observable(false),
+        current_training$: ko.observable()
     };
 }
 
 function expandTrainingData(training_data) {
     collapseTrainingDataIfOpen();
     var row = training_data.extraTrainingInfo.enclosingRow;
-    training_data.extraTrainingInfo.expanded(true);
-    row.expanded(true);
-    row.current_training(training_data);
+    training_data.extraTrainingInfo.expanded$(true);
+    row.expanded$(true);
+    row.current_training$(training_data);
     loadTrainingPlanDescription(training_data);
     clampTrainingDataDescription(training_data);
 }
 
 function collapseTrainingDataIfOpen() {
-    var category_plan_array = learning_plan.category_plan();
+    var category_plan_array = learning_plan.category_plan$();
     for (var c = 0; c < category_plan_array.length; c++) {
         var category_plan = category_plan_array[c];
         var rows = category_plan.training_data_rows;
         for (var r = 0; r < rows.length; r++) {
             var row = rows[r];
-            if (row.expanded()) {
-                row.current_training().extraTrainingInfo.expanded(false);
-                row.expanded(false);
-                row.current_training(undefined);
+            if (row.expanded$()) {
+                row.current_training$().extraTrainingInfo.expanded$(false);
+                row.expanded$(false);
+                row.current_training$(undefined);
             }
         }
     }
@@ -297,25 +297,25 @@ function collapseTrainingDataIfOpen() {
 
 function collapseTrainingData(training_data) {
     var row = training_data.extraTrainingInfo.enclosingRow;
-    training_data.extraTrainingInfo.expanded(false);
-    row.expanded(false);
-    row.current_training(undefined);
+    training_data.extraTrainingInfo.expanded$(false);
+    row.expanded$(false);
+    row.current_training$(undefined);
 }
 
 function collapseAllTrainingData() {
-    learning_plan.initial_plan().forEach(function(training_data) {
-        if (training_data.extraTrainingInfo.expanded()) {
+    learning_plan.initial_plan$().forEach(function(training_data) {
+        if (training_data.extraTrainingInfo.expanded$()) {
             collapseTrainingData(training_data);
         }
     });
 }
 
 function loadTrainingPlanDescription(training_data) {
-    if (training_data.extraTrainingInfo.description()) {
+    if (training_data.extraTrainingInfo.description$()) {
         return;
     }
     if (useDummyTrainingData && training_data.DummyDescription) {
-        training_data.extraTrainingInfo.description(training_data.DummyDescription);
+        training_data.extraTrainingInfo.description$(training_data.DummyDescription);
         return;
     }
     loadCourse(training_data.Course.courseId,
@@ -323,17 +323,17 @@ function loadTrainingPlanDescription(training_data) {
             var description = data.Description;
             console.log("Retrieved course data; " + data.Title + "; description: " + description);
             description = description || "[ No description supplied ]";
-            training_data.extraTrainingInfo.description(description);
+            training_data.extraTrainingInfo.description$(description);
         },
         function(msg) {
             var description = "[ Failed to retrieve course description ]";
-            training_data.extraTrainingInfo.description(description);
+            training_data.extraTrainingInfo.description$(description);
         }
     );
 }
 
 function clampTrainingDataDescription(training_data) {
-    training_data.extraTrainingInfo.descriptionExpanded(false);
+    training_data.extraTrainingInfo.descriptionExpanded$(false);
     var paragraphs = $('.lp_course_expanded_description .lp-paragraph-shrunk');
     if (paragraphs) {
         console.log("Clamping description to 3 lines of text...");
@@ -343,10 +343,10 @@ function clampTrainingDataDescription(training_data) {
 }
 
 function toggleExpandedDescription(training_data) {
-    if (training_data.extraTrainingInfo.descriptionExpanded()) {
+    if (training_data.extraTrainingInfo.descriptionExpanded$()) {
         clampTrainingDataDescription(training_data);
     } else {
-        training_data.extraTrainingInfo.descriptionExpanded(true);
+        training_data.extraTrainingInfo.descriptionExpanded$(true);
     }
 }
 
