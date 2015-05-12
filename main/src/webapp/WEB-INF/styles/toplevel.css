@@ -5,15 +5,6 @@
     border-radius: 15px;
 }
 
-.lp_logo * {
-    background-color: #202F40;
-}
-.lp_logo_bar {
-    height: 90px;
-}
-.lp_logo_content {
-    height: 100%;
-}
 .lp_heading * {
     background-color: #2C3E51;
     color: white;
