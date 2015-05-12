@@ -16,7 +16,7 @@
 .lp_heading_content {
     height: 100%;
 }
-.lp_heading_left_margin, .lp_filter_left_margin, .lp_category_header_left_margin {
+.lp_heading_left_margin, .lp_filter_left_margin {
     width: 5%;
     height: 1px;
     float: left;
@@ -97,15 +97,16 @@ img.lp_heading_content {
 
 .lp_category_section {
     clear: both;
+    width: 100%;
 }
 .lp_category_section * {
     background-color: #ECEFF4;
 }
 .lp_category_section_header {
     padding-top: 20px;
+    padding-left: 5%;
     padding-bottom: 10px;
     font-size: large;
-    float: left;
 }
 .lp_course_section {
     width: 100%;

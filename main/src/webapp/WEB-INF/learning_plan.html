@@ -104,14 +104,12 @@
 
     <!-- ko if: !category_plan$() || category_plan$().length == 0-->
     <div class="lp_category_section">
-        <div class="lp_category_header_left_margin">
-        </div>
         <div class="lp_category_section_header">
             <!-- ko if: !category_plan$() -->
             Loading Training Data ...
             <!-- /ko -->
             <!-- ko if: category_plan$() -->
-            No Training Data found
+            No matching Training Data found
             <!-- /ko -->
         </div>
     </div>
@@ -119,8 +117,6 @@
 
     <!-- ko foreach: category_plan$ -->
     <div class="lp_category_section">
-        <div class="lp_category_header_left_margin">
-        </div>
         <div class="lp_category_section_header">
             <!-- ko if: categoryName -->
             <span data-bind="text: categoryName"></span>
