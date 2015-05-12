@@ -20,9 +20,9 @@ function setupKnockoutCustomisations() {
             animationClassname = "se-fully-visible";
             elementFullyVisible = function() {
                 $(element).addClass(animationClassname);
-                if (!isElementInViewport(element)) {
-                    scrollToElement(element);
-                }
+                //if (!isElementInViewport(element)) {
+                //    scrollToElement(element);
+                //}
             };
             elementFullyHidden = function() {
                 $(element).removeClass(animationClassname);
