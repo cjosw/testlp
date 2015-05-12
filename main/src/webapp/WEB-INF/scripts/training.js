@@ -207,7 +207,7 @@ function trainingDataMatchesFilter(training_data, filters) {
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {
     var trainingDataByCategory = groupByCategoriesAndRows(training_data_list);
-    console.log("Got n categories: " + trainingDataByCategory.length);
+    console.log("Got " + trainingDataByCategory.length + " categories after applying filters");
     return trainingDataByCategory;
 }
 
@@ -322,7 +322,6 @@ function loadTrainingPlanDescription(training_data) {
     loadCourse(training_data.Course.courseId,
         function(data) {
             var description = data.Description;
-            console.log("Retrieved course data; " + data.Title + "; description: " + description);
             description = description || "[ No description supplied ]";
             training_data.extraTrainingInfo.description$(description);
             clampTrainingDataDescription(training_data);
