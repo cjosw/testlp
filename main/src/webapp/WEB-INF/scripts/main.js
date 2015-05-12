@@ -20,6 +20,7 @@ function LearningPlanViewModel() {
 }
 
 function learning_plan_startup(options) {
+    lp_compatibilityWorkarounds();
     decodeQueryParams(options);
 
     learning_plan = new LearningPlanViewModel();
@@ -40,4 +41,8 @@ function decodeQueryParams(options) {
     useDummyUser         = decodeBooleanQueryParam(params, "useDummyUser",         options.useDummyUser, "false");
     useRealTrainingData  = decodeBooleanQueryParam(params, "useRealTrainingData",  options.useRealTrainingData, "true");
     useDummyTrainingData = decodeBooleanQueryParam(params, "useDummyTrainingData", options.useDummyTrainingData, "false");
+}
+
+function lp_compatibilityWorkarounds() {
+    jQuery.support.cors = true; /* needed for IE9 http://stackoverflow.com/questions/9160123/no-transport-error-w-jquery-ajax-call-in-ie */
 }
