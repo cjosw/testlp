@@ -206,7 +206,7 @@ function trainingDataMatchesFilter(training_data, filters) {
 }
 
 function structurePlanIntoCategoriesAndRows(training_data_list) {
-    var trainingDataByCategory = groupByCategoriesAndRows(training_data_list)
+    var trainingDataByCategory = groupByCategoriesAndRows(training_data_list);
     console.log("Got n categories: " + trainingDataByCategory.length);
     return trainingDataByCategory;
 }
@@ -238,7 +238,7 @@ function groupCategoriesIntoRows(arrayByCategoryName) {
     // Each row has a list of trainig_data entries ('courses'), plus some flags.
     // The rows are 'blank padded' to the full width to aid layout on the page.
 
-    var trainingByCategory = []
+    var trainingByCategory = [];
     for (var categoryName in arrayByCategoryName) {
         var rows = [];
         var row = blankRow();
@@ -252,7 +252,7 @@ function groupCategoriesIntoRows(arrayByCategoryName) {
             training_data_for_category[t].extraTrainingInfo.columnNumber = row.courses.length;
             row.courses.push(training_data_for_category[t]);
         }
-        for (var t = row.courses.length; t < coursesPerRow; t++) {
+        for (var b = row.courses.length; b < coursesPerRow; b++) {
             row.courses.push(BlankTrainingData);
         }
         rows.push(row);

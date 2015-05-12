@@ -16,10 +16,10 @@ function LearningPlanViewModel() {
     };
 
     self.category_plan$ = ko.pureComputed(function() { return assembleCategoryPlan(self.initial_plan$(), self.filters); });
-    self.category_plan$.subscribe(function(){ collapseAllTrainingData(); }) // close any when the filters change
+    self.category_plan$.subscribe(function(){ collapseAllTrainingData(); }); // close any when the filters change
 }
 
-function startup(options) {
+function learning_plan_startup(options) {
     decodeQueryParams(options);
 
     learning_plan = new LearningPlanViewModel();

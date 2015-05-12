@@ -1,12 +1,12 @@
 function invokeAjax(url, successFn, errorFn) {
-    console.log("Invoking: " + url + " ...")
+    console.log("Invoking: " + url + " ...");
     $.ajax({
         url: url,
         crossDomain: true,
         success: successFn,
         error: (function(_this) {
             return function(jqXHR, textStatus, errorThrown) {
-                msg = "Failed to retrieve URL: " + url + "; error: " + jqXHR.statusText;
+                var msg = "Failed to retrieve URL: " + url + "; error: " + jqXHR.statusText;
                 console.log(msg);
                 if (errorFn) {
                     errorFn(msg);
