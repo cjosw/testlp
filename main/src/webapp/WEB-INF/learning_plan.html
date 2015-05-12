@@ -2,7 +2,6 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
     <title>Learning Plan</title>
 </head>
 
@@ -24,7 +23,8 @@
 <script type='text/javascript' src='scripts/utils.js'></script>
 <script type='text/javascript' src='scripts/testdata.js'></script>
 
-<div class="container-fluid lp_body">
+
+<div class="lp_body">
 
     <!-- logo is not actually required
     <div class="row lp_logo lp_logo_bar">
@@ -37,15 +37,15 @@
         </div>
     </div>
     -->
-    <div class="row lp_heading lp_heading_bar">
-        <div class="col-md-1 lp_heading_content">
+    <div class="lp_heading lp_heading_bar">
+        <div class="lp_heading_content lp_heading_left_margin">
         </div>
-        <div class="col-md-1 lp_heading_content lp_heading_image_container">
+        <div class="lp_heading_content lp_heading_image_container">
             <div class="lp_heading_cropper image-cropper">
                 <img class="lp_heading_content" data-bind="src: userImageSrc()">
             </div>
         </div>
-        <div class="col-md-2 lp_heading_content">
+        <div class="lp_heading_content lp_heading_name_container">
             <table>
                 <tr>
                     <div class="lp_heading_text_container" data-bind="with: user">
@@ -69,14 +69,14 @@
                 </tr>
             </table>
         </div>
-        <div class="col-md-8 lp_heading_content">
+        <div class="lp_heading_content">
         </div>
     </div>
 
-    <div class="row lp_filter_bar" data-bind="with: filters">
-        <div class="col-md-1">
+    <div class="lp_filter_bar" data-bind="with: filters">
+        <div class="lp_filter_left_margin">
         </div>
-        <div class="col-md-4">
+        <div class="lp_filter_search">
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText">
@@ -84,14 +84,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="lp_filter_categories">
             <select type="text" class="form-control"
                     data-bind="value: categoryFilter,
                                         options: categoryOptions,
                                         optionsCaption: 'All Categories'">
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="lp_filter_completed">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: showCompletedCoursesOnly">
@@ -99,7 +99,7 @@
                 </label>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="lp_filter_online">
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-bind="checked: showOnlineCoursesOnly">
@@ -115,43 +115,37 @@
 
     <!-- ko if: !category_plan() || category_plan().length == 0-->
     <div class="lp_category_section">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12 lp_category_section_header">
-                    <!-- ko if: !category_plan() -->
-                    Loading Training Data ...
-                    <!-- /ko -->
-                    <!-- ko if: category_plan() -->
-                    No Training Data found
-                    <!-- /ko -->
-                </div>
-            </div>
+        <div class="lp_category_header_left_margin">
+        </div>
+        <div class="lp_category_section_header">
+            <!-- ko if: !category_plan() -->
+            Loading Training Data ...
+            <!-- /ko -->
+            <!-- ko if: category_plan() -->
+            No Training Data found
+            <!-- /ko -->
         </div>
     </div>
     <!-- /ko -->
 
     <!-- ko foreach: category_plan -->
     <div class="lp_category_section">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="col-md-12 lp_category_section_header">
-                    <!-- ko if: categoryName -->
-                    <span data-bind="text: categoryName"></span>
-                    <!-- /ko -->
-                    <!-- ko if: !categoryName -->
-                    [ No category ]
-                    <!-- /ko -->
-                </div>
-            </div>
+        <div class="lp_category_header_left_margin">
+        </div>
+        <div class="lp_category_section_header">
+            <!-- ko if: categoryName -->
+            <span data-bind="text: categoryName"></span>
+            <!-- /ko -->
+            <!-- ko if: !categoryName -->
+            [ No category ]
+            <!-- /ko -->
         </div>
         <!-- ko foreach: training_data_rows -->
         <div>
-        <div class="row">
-            <div class="col-md-12">
                 <table class="lp_course_section">
                     <tr>
                         <!-- ko foreach: courses -->
-                        <td class="col-md-2">
+                        <td class="lp_course_column">
                                 <table data-bind="if: !extraTrainingInfo.blank" class="lp_course_table">
                                     <tr>
                                         <td>
@@ -205,21 +199,19 @@
                         <!-- /ko -->
                     </tr>
                 </table>
-            </div>
-        </div>
-        <div class="lp_expanded_course" data-bind="slideIn: expanded()">
-            <div class="col-md-12" data-bind="with: current_training()">
-                <div class="col-md-5">
-                    <div class="col-md-6 pull-right">
+        <table class="lp_expanded_course" data-bind="visible: expanded()">
+            <tr class="lp_course_expanded_container" data-bind="with: current_training()">
+                <td class="lp_course_expanded_image_box">
+                    <div class="pull-right">
                         <img class="lp_course_expanded_image" data-bind="src: imageName">
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <div class="row">
-                        <div class="col-md-12 lp_course_expanded_name">
+                </td>
+                <td class="lp_course_expanded_text_box">
+                    <div>
+                        <div class="lp_course_expanded_name">
                             <span data-bind="text: Course.Summary"></span>
                         </div>
-                        <div class="col-md-12 lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
+                        <div class="lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
                             <!-- ko if: !extraTrainingInfo.descriptionExpanded() -->
                                 <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description()"></p>
                             <!-- /ko -->
@@ -227,18 +219,20 @@
                                 <p class="lp-paragraph-expanded" data-bind="text: extraTrainingInfo.description()"></p>
                             <!-- /ko -->
                         </div>
-                        <div class="col-md-12 lp_course_expanded_links">
-                            <div class="col-md-3">
+                        <table class="lp_course_expanded_links">
+                            <tr>
+                            <td class="lp_course_expanded_link">
                                 <a href="#"><span class="glyphicon glyphicon-new-window"></span> Live chat</a>
-                            </div>
-                            <div class="col-md-6">
+                            </td>
+                            <td class="lp_course_expanded_links">
                                 <a href="#"><span class="glyphicon glyphicon-new-window"></span> Community chat</a>
-                            </div>
-                        </div>
+                            </td>
+                            </tr>
+                        </table>
                         <!-- ko foreach: LessonUsers -->
-                        <div class="col-md-12 lp_course_expanded_lesson">
-                            <div>
-                                <div class="col-md-9">
+                        <table class="lp_course_expanded_lesson">
+                            <tr>
+                                <td>
                                     <table>
                                         <tr>
                                             <td>
@@ -258,10 +252,8 @@
                                             </td>
                                         </tr>
                                     </table>
-                                </div>
-                                <div class="col-md-3 lp_course_lesson_button_container">
-                                    <!--(<span data-bind="text: extraLessonInfo.status"></span>)-->
-                                    <!--(<span data-bind="text: extraLessonInfo.isOnline"></span>)-->
+                                </td>
+                                <td class="lp_course_lesson_button_container">
                                     <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.COMPLETED -->
                                         <button type="button" class="btn btn-default btn-sm lp_course_completed_btn" disabled="disabled">Completed</button>
                                     <!-- /ko -->
@@ -289,17 +281,17 @@
                                             Book (status: <span data-bind="text: extraLessonInfo.status"></span>)
                                         </button>
                                     <!-- /ko -->
-                                </div>
-                                <div class="col-md-12">
-                                    <hr class="lp_course_expanded_lesson_divider">
-                                </div>
-                            </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div>
+                            <hr class="lp_course_expanded_lesson_divider">
                         </div>
                         <!-- /ko -->
                     </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+        </table>
         </div>
         <!-- /ko -->
     </div>
@@ -309,8 +301,8 @@
     We have a blank footer row because it makes the sligein/slideout functionality work better;
     otherwise it can magically appear below the bottom of the currently visible screen.
      -->
-    <div class="row lp_footer_bar">
-        <div class="col-md-1 lp_footer_content">
+    <div class="lp_footer_bar">
+        <div class="lp_footer_content">
         </div>
     </div>
 
@@ -330,5 +322,7 @@
     </script>
 
 </div>
+
+
 </body>
 </html>

@@ -1,7 +1,7 @@
 .lp_body {
     font-family: Arial;
 }
-.btn {
+.lp_body *.btn {
     border-radius: 15px;
 }
 
@@ -20,12 +20,24 @@
 }
 .lp_heading_bar {
     height: 112px;
+    clear: both;
 }
 .lp_heading_content {
     height: 100%;
 }
+.lp_heading_left_margin, .lp_filter_left_margin, .lp_category_header_left_margin {
+    width: 5%;
+    height: 1px;
+    float: left;
+}
 .lp_heading_image_container {
     padding-top: 20px;
+    width: 100px;
+    float: left;
+}
+.lp_heading_name_container {
+    width: 200px;
+    float: left;
 }
 .lp_heading_text_container {
     padding-top: 20px;
@@ -73,26 +85,50 @@ img.lp_heading_content {
 
 .lp_filter_bar {
     margin-top: 15px;
+    width: 100%;
+    clear: both;
+}
+.lp_filter_search {
+    width: 25%;
+    float: left;
+}
+.lp_filter_categories {
+    margin-left: 7%;
+    width: 18%;
+    float: left;
+}
+.lp_filter_completed, .lp_filter_online {
+    margin-left: 2%;
+    width: 18%;
+    float: left;
+    font-size: smaller;
 }
 
+.lp_category_section {
+    clear: both;
+}
 .lp_category_section * {
     background-color: #ECEFF4;
 }
 .lp_category_section_header {
-    margin-top: 20px;
-    margin-bottom: 10px;
+    padding-top: 20px;
+    padding-bottom: 10px;
     font-size: large;
+    float: left;
 }
 .lp_course_section {
     width: 100%;
+}
+.lp_course_column {
+    width: 16%;
 }
 .lp_course_table {
     text-align: center;
     margin: auto;
 }
 .lp_course_summary_image {
-    max-height: 250px;
-    max-width: 200px;
+    max-height: 200px;
+    max-width: 150px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -101,20 +137,22 @@ img.lp_heading_content {
     font-weight: bold;
 }
 .lp_truncate {
-    max-width: 200px;
+    max-width: 150px;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;     /** IE6+, Firefox 7+, Opera 11+, Chrome, Safari **/
     -o-text-overflow: ellipsis;  /** Opera 9 & 10 **/
 }
+.lp_course_fully_completed, .lp_course_part_completed, .lp_course_not_started {
+    font-size: smaller;
+    font-style: italic;
+}
 .lp_course_fully_completed {
     color: #5ECF80;
-    font-style: italic;
 }
 .lp_course_part_completed, .lp_course_not_started {
     color: grey;
-    font-style: italic;
 }
 .lp_view_info_btn, .lp_hide_info_btn {
     margin-top: 10px;
@@ -158,11 +196,21 @@ img.lp_heading_content {
 .lp_expanded_course {
     width: 100%;
 }
+.lp_course_expanded_container {
+}
+.lp_course_expanded_image_box {
+    width: 40%;
+    vertical-align: top;
+}
 .lp_course_expanded_image {
     max-height: 350px;
     max-width: 300px;
     margin-top: 25px;
     margin-bottom: 15px;
+}
+.lp_course_expanded_text_box {
+    width: 60%;
+    padding-left: 20px;
 }
 .lp_course_expanded_name {
     font-size: x-large;
@@ -172,6 +220,10 @@ img.lp_heading_content {
 .lp_course_expanded_description, .lp_course_expanded_links {
     margin-bottom: 15px;
 }
+.lp_course_expanded_name, .lp_course_expanded_description,
+.lp_course_expanded_lesson, .lp_course_expanded_lesson_divider {
+    width: 500px; /* This needs to be hard-coded because of the way the expanding/shrinking description is implemented. :-( */
+}
 .lp_course_expanded_description {
     overflow: hidden;
 }
@@ -179,9 +231,14 @@ img.lp_heading_content {
     margin: 0;
     /* all the real styling is done using the TextOverflowClamp.js library. */
 }
+.lp_course_expanded_link {
+    padding-left: 10px;
+    padding-right: 20px;
+}
 .lp_course_expanded_lessons {
 }
 .lp_course_expanded_lesson {
+    padding-left: 10px;
     margin-bottom: 10px;
 }
 .lp_course_expanded_lesson_title {
