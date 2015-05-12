@@ -98,15 +98,11 @@
         </div>
     </div>
 
-    <div class="error" data-bind="visible: errorMessage$()">
-        <span data-bind="text: errorMessage$"/>
-    </div>
-
     <!-- ko if: !category_plan$() || category_plan$().length == 0-->
     <div class="lp_category_section">
         <div class="lp_category_section_header">
             <!-- ko if: !category_plan$() -->
-            Loading Training Data ...
+            Loading Training Data &hellip;
             <!-- /ko -->
             <!-- ko if: category_plan$() -->
             No matching Training Data found
@@ -114,6 +110,12 @@
         </div>
     </div>
     <!-- /ko -->
+
+    <div class="lp_error_section" data-bind="visible: errorMessage$()">
+        <div class="lp_error_message">
+            <span data-bind="text: errorMessage$"></span>
+        </div>
+    </div>
 
     <!-- ko foreach: category_plan$ -->
     <div class="lp_category_section">
