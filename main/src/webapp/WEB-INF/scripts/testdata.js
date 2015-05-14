@@ -71,6 +71,8 @@ function getTrainingData(categoryName, num) {
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
+        training_data.DummyDescription = "This is a short description";
+        training_data.Course.Summary = "Course 3 (online) with short description";
     }
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
