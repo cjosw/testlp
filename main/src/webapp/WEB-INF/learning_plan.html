@@ -136,7 +136,14 @@
                                 <table data-bind="if: !extraTrainingInfo.blank" class="lp_course_table">
                                     <tr>
                                         <td>
-                                            <img class="lp_course_summary_image" data-bind="src: imageName">
+                                            <!-- ko if: PrerequisitesMet -->
+                                            <a href="#" data-bind="click: expandTrainingData">
+                                                <img class="lp_course_summary_image" data-bind="src: imageName">
+                                            </a>
+                                            <!-- /ko -->
+                                            <!-- ko if: !PrerequisitesMet -->
+                                                <img class="lp_course_summary_image" data-bind="src: imageName">
+                                            <!-- /ko -->
                                         </td>
                                     </tr>
                                     <tr>
