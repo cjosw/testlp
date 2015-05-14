@@ -4,7 +4,7 @@ function loadTrainingPlan(userId) {
         trainingLoadedSuccess([])
     } else {
         console.log("Loading training plan for userId: " + userId + " ...")
-        invokeAjax(rootAPIUrl + 'users/' + userId + '/training', trainingLoadedSuccess);
+        invokeAjax(rootAPIUrl + 'users/' + userId + '/training?currentAssignments=true', trainingLoadedSuccess);
     }
 }
 
