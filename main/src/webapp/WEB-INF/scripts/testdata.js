@@ -67,6 +67,8 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.NotStarted;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Cancelled;
+        training_data.DummyDescription = "";
+        training_data.Course.Summary = "Course 2, no description";
     }
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;

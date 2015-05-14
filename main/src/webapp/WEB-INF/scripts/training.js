@@ -314,7 +314,7 @@ function loadTrainingPlanDescription(training_data) {
         clampTrainingDataDescription(training_data);
         return;
     }
-    if (useDummyTrainingData && training_data.DummyDescription) {
+    if (useDummyTrainingData && training_data.DummyDescription != undefined) {
         training_data.extraTrainingInfo.description$(training_data.DummyDescription);
         clampTrainingDataDescription(training_data);
         return;
@@ -322,7 +322,7 @@ function loadTrainingPlanDescription(training_data) {
     loadCourse(training_data.Course.courseId,
         function(data) {
             var description = data.Description;
-            description = description || "[ No description supplied ]";
+            description = description || "";
             training_data.extraTrainingInfo.description$(description);
             clampTrainingDataDescription(training_data);
         },
