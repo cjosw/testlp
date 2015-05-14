@@ -270,11 +270,7 @@
                                             <span class="glyphicon glyphicon-play"></span> In Progress
                                         </button>
                                     <!-- /ko -->
-                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.UNKNOWN -->
-                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">
-                                            Book (status: <span data-bind="text: extraLessonInfo.status"></span>)
-                                        </button>
-                                    <!-- /ko -->
+                                    <!-- Other possibles are 'NOBUTTON', and 'UNKNOWN'. In either case, show nothing. -->
                                 </td>
                             </tr>
                         </table>

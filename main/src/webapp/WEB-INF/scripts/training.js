@@ -72,10 +72,11 @@ function updateStaticDataOnTrainingPlan(training_data) {
     for (var l = 0; l < training_data.LessonUsers.length; l++) {
         var lessonUser = training_data.LessonUsers[l];
         var status = getLessonUserStatus(lessonUser);
-        var isLessonOnline = isOnlineLesson(lessonUser.Lesson.Type);
+        var categoriesedLessonType = categoriseLessonType(lessonUser.Lesson.Type);
+        var isLessonOnline = categoriesedLessonType == CategorisedLessonTypes.ONLINE;
         var extraLessonInfo = {
             status: status,
-            visibleStatus: categoriseStatus(status, isLessonOnline, lessonUser),
+            visibleStatus: categoriseStatus(status, categoriesedLessonType, lessonUser),
             stars: [0,0,0,0,0],
             isOnline: isLessonOnline,
             parentTrainingData: training_data
@@ -104,7 +105,11 @@ function getLessonUserStatus(lessonUser) {
     return status;
 }
 
-function categoriseStatus(status, isOnline, lessonUser) {
+function categoriseStatus(status, categoriesedLessonType, lessonUser) {
+    if (categoriesedLessonType == CategorisedLessonTypes.UNKNOWN) {
+        return VisibleStatuses.NOBUTTON;
+    }
+    var isOnline = categoriesedLessonType == CategorisedLessonTypes.ONLINE;
     switch (status) {
         case LearningRecordStatuses.Cancelled:
             return VisibleStatuses.CANCELLED;
@@ -119,7 +124,7 @@ function categoriseStatus(status, isOnline, lessonUser) {
         case "":
             return isOnline ? VisibleStatuses.ONLINE_IN_PROGRESS : VisibleStatuses.BOOKED;
         default:
-            return VisibleStatuses.UNKNOWN;
+            return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : VisibleStatuses.AVAILABLE_TO_BOOK;
     }
 }
 
@@ -128,16 +133,18 @@ function isLessonEventBooked(lessonUser) {
         lessonUser.ChildEventUsers.some(function(eventUser){ return eventUser.Status == EventUserStatuses.Booked; });
 }
 
-function isOnlineLesson(lessonType) {
+function categoriseLessonType(lessonType) {
     switch (lessonType) {
         case LessonTypes.Aicc:
         case LessonTypes.Kallidus:
         case LessonTypes.Url:
         case LessonTypes.Scorm:
         case LessonTypes.Scorm2004:
-            return true;
+            return CategorisedLessonTypes.ONLINE;
+        case LessonTypes.Classroom:
+            return CategorisedLessonTypes.CLASSROOM;
         default:
-            return false;
+            return CategorisedLessonTypes.UNKNOWN;
     }
 }
 
@@ -413,7 +420,8 @@ VisibleStatuses = {
     ONLINE_IN_PROGRESS: 3,
     COMPLETED: 4,
     CANCELLED: 5,
-    UNKNOWN: 6
+    NOBUTTON: 6,
+    UNKNOWN: 7
 };
 
 LessonTypes = {
@@ -433,3 +441,9 @@ LessonTypes = {
     Container: "Container",
     Other: "Other"
 };
+
+CategorisedLessonTypes = {
+    ONLINE: 0,
+    CLASSROOM: 1,
+    UNKNOWN: 2
+}

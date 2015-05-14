@@ -1,6 +1,6 @@
 function getTestTrainingData() {
     var training_data_list = [];
-    for (var i = 0; i < (coursesPerRow+1); i++) {
+    for (var i = 0; i < (coursesPerRow+2); i++) {
         training_data_list.push(getTrainingData("Agile Development", i))
     }
     return training_data_list;
@@ -91,6 +91,9 @@ function getTrainingData(categoryName, num) {
     if (num == 5) {
         training_data.Course.Summary = "Course 5 (Prerequisites not met)";
         training_data.PrerequisitesMet = false;
+    }
+    if (num == 7) {
+        training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
     }
     return training_data;
 }
