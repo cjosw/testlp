@@ -248,8 +248,12 @@ img.lp_heading_content {
     color: grey;
 }
 .lp_course_expanded_lesson_divider {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 .lp_course_lesson_button_container {
     text-align: right;
