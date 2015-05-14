@@ -141,6 +141,7 @@ function categoriseLessonType(lessonType) {
         case LessonTypes.Url:
         case LessonTypes.Scorm:
         case LessonTypes.Scorm2004:
+        case LessonTypes.Basic:
             return CategorisedLessonTypes.ONLINE;
         case LessonTypes.Classroom:
             return CategorisedLessonTypes.CLASSROOM;
@@ -443,6 +444,7 @@ LessonTypes = {
     Url: "Url",
     Scorm: "Scorm",
     Scorm2004: "Scorm2004",
+    Basic: "Basic",
     Classroom: "Classroom",
     Book: "Book",
     Audio: "Audio",
