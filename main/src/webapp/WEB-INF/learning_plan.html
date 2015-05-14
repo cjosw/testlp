@@ -205,6 +205,16 @@
                         <div class="lp_course_expanded_name">
                             <span data-bind="text: Course.Summary"></span>
                         </div>
+                        <div class="lp_course_expanded_rating">
+                            <!-- ko foreach: extraTrainingInfo.ratingStars -->
+                                <!-- ko if: $data -->
+                                    <span class="glyphicon glyphicon-star lp_star_filled"></span>
+                                <!-- /ko -->
+                                <!-- ko if: !$data -->
+                                    <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
+                                <!-- /ko -->
+                            <!-- /ko -->
+                        </div>
                         <div class="lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
                             <!-- ko if: !extraTrainingInfo.descriptionExpanded$() -->
                                 <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description$()"></p>
@@ -228,25 +238,7 @@
                         <table class="lp_course_expanded_lesson">
                             <tr>
                                 <td>
-                                    <table>
-                                        <tr>
-                                            <td>
-                                                <span class="lp_course_expanded_lesson_title" data-bind="text: Lesson.Title"></span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <!-- ko foreach: extraLessonInfo.stars -->
-                                                    <!-- ko if: $data -->
-                                                        <span class="glyphicon glyphicon-star lp_star_filled"></span>
-                                                    <!-- /ko -->
-                                                    <!-- ko if: !$data -->
-                                                        <span class="glyphicon glyphicon-star-empty lp_star_empty"></span>
-                                                    <!-- /ko -->
-                                                <!-- /ko -->
-                                            </td>
-                                        </tr>
-                                    </table>
+                                    <span class="lp_course_expanded_lesson_title" data-bind="text: Lesson.Title"></span>
                                 </td>
                                 <td class="lp_course_lesson_button_container">
                                     <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.COMPLETED -->

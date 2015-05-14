@@ -212,7 +212,10 @@ img.lp_heading_content {
 .lp_course_expanded_name {
     font-size: x-large;
     margin-top: 25px;
-    margin-bottom: 15px;
+}
+.lp_course_expanded_rating {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .lp_course_expanded_description, .lp_course_expanded_links {
     margin-bottom: 15px;
@@ -251,10 +254,10 @@ img.lp_heading_content {
     color: grey;
 }
 .lp_course_expanded_lesson_divider {
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 5px;
     margin-right: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
     padding-left: 5px;
     padding-right: 5px;
 }

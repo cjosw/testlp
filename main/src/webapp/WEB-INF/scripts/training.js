@@ -77,7 +77,6 @@ function updateStaticDataOnTrainingPlan(training_data) {
         var extraLessonInfo = {
             status: status,
             visibleStatus: categoriseStatus(status, categoriesedLessonType, lessonUser),
-            stars: [0,0,0,0,0],
             isOnline: isLessonOnline,
             parentTrainingData: training_data
         };
@@ -94,6 +93,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         completed: (numCompleted == training_data.LessonUsers.length),
         isOnline: isOnline,
         blank: false,
+        ratingStars: [0,0,0,0,0],
         expanded$: ko.observable(false)
     };
     training_data.extraTrainingInfo = extraTrainingInfo;
