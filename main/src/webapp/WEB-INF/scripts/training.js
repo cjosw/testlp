@@ -75,6 +75,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         var categoriesedLessonType = categoriseLessonType(lessonUser.Lesson.Type);
         var isLessonOnline = categoriesedLessonType == CategorisedLessonTypes.ONLINE;
         var extraLessonInfo = {
+            lessonNumber: l + 1,
             status: status,
             visibleStatus: categoriseStatus(status, categoriesedLessonType, lessonUser),
             isOnline: isLessonOnline,
