@@ -6,6 +6,7 @@ function LearningPlanViewModel() {
     self.progress$ = ko.observable();
     self.initial_plan$ = ko.observable();
     self.errorMessage$ = ko.observable();
+    self.loadingAnimationSrc$ = ko.observable(rootContentUrl + "images/loading_animation1_transparent.gif");
 
     self.filters = {
         searchText$: ko.observable(),
