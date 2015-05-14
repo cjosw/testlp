@@ -341,12 +341,24 @@ function loadTrainingPlanDescription(training_data) {
 }
 
 function clampTrainingDataDescription(training_data) {
+    var linesToShow = 3;
     training_data.extraTrainingInfo.descriptionExpanded$(false);
     var paragraphs = $('.lp_course_expanded_description .lp-paragraph-shrunk');
     if (paragraphs) {
         console.log("Clamping description to 3 lines of text...");
         var paragraph = paragraphs[0];
-        clamp(paragraph, 3);
+        clamp(paragraph, linesToShow);
+        var paragraphContents = $('.lp_course_expanded_description .lp-paragraph-shrunk span');
+        if (paragraphContents && paragraphContents.length < linesToShow) {
+            // short enough not to need any 'expansion' button; show the 'expanded' version instead!
+            training_data.extraTrainingInfo.descriptionExpanded$(true);
+        } else if (paragraphContents && paragraphContents.length == linesToShow) {
+            var lastVisibleLine = paragraphContents[linesToShow-1];
+            if (lastVisibleLine.scrollWidth <= lastVisibleLine.clientWidth) {
+                // didn't actually need truncation
+                training_data.extraTrainingInfo.descriptionExpanded$(true);
+            }
+        }
     }
 }
 

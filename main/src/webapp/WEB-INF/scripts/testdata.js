@@ -68,19 +68,23 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Cancelled;
         training_data.DummyDescription = "";
-        training_data.Course.Summary = "Course 2, no description";
+        training_data.Course.Summary = "Course 1, no description";
     }
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.DummyDescription = "This is a short description";
-        training_data.Course.Summary = "Course 3 (online) with short description";
+        training_data.Course.Summary = "Course 2 (online) with short description";
     }
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Complete;
         training_data.Course.Summary = "Course 3 (completed) which is a very long name which needs truncating";
+        training_data.DummyDescription = "Call me Ishmael. "+
+            "Some years ago - never mind how long precisely - having little or no money in my purse, "+
+            "and nothing particular to interest me on shore, "+
+            "I thought I would sail about a little and see the watery part of the world.";
     }
     if (num == 4) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Failed;

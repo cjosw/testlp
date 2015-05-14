@@ -228,6 +228,9 @@ img.lp_heading_content {
     margin: 0;
     /* all the real styling is done using the TextOverflowClamp.js library. */
 }
+.lp-paragrap-more {
+    float: right;
+}
 .lp_course_expanded_link {
     padding-left: 10px;
     padding-right: 20px;
