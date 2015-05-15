@@ -42,24 +42,24 @@ function getTrainingData(categoryName, num) {
             }
         ],
         PrerequisitesMet: true,
-        DummyDescription: "Call me Ishmael. "+
+        DummyDescription: "<p>Call me Ishmael. "+
             "Some years ago - never mind how long precisely - having little or no money in my purse, "+
             "and nothing particular to interest me on shore, "+
-            "I thought I would sail about a little and see the watery part of the world. "+
-            "It is a way I have of driving off the spleen, and regulating the circulation. "+
-            "Whenever I find myself growing grim about the mouth; "+
+            "I thought I would sail about a little and see the watery part of the world.<br> "+
+            "It is a way I have of driving off the spleen, and regulating the circulation. </p>"+
+            "<p>Whenever I find myself growing grim about the mouth; "+
             "whenever it is a damp, drizzly November in my soul; "+
             "whenever I find myself involuntarily pausing before coffin warehouses, "+
             "and bringing up the rear of every funeral I meet; "+
             "and especially when my hypos get such an upper hand of me, "+
             "that it requires a strong moral principle to prevent me from deliberately stepping into the street, "+
             "and methodically knocking people's hats off- "+
-            "then, I account it high time to get to a bookstore as soon as I can. "+
-            "That is my substitute for the pistol and ball."+
-            "With a philosophical flourish Cato throws himself upon his sword; "+
+            "then, I account it high time to get to a bookstore as soon as I can.<br> "+
+            "That is my substitute for the pistol and ball.</p>"+
+            "<p>With a philosophical flourish Cato throws himself upon his sword; "+
             "I quietly take to the ship. There is nothing surprising in this. "+
             "If they but knew it, almost all men in their degree, some time or other, "+
-            "cherish very nearly the same feelings towards the ocean with me."
+            "cherish very nearly the same feelings towards the ocean with me.</p>"
         ,
         Status: "Not started"
     };
@@ -98,6 +98,10 @@ function getTrainingData(categoryName, num) {
     }
     if (num == 7) {
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
+        training_data.DummyDescription = "Description line 1. <br>"+
+            "Description line 2. <br>"+
+            "Description line 3. <br>"+
+            "Description line 4. ";
     }
     return training_data;
 }

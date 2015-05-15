@@ -244,6 +244,9 @@ input[type="checkbox"].lp_filter_checkbox {
     margin: 0;
     /* all the real styling is done using the TextOverflowClamp.js library. */
 }
+.lp-paragraph-expanded {
+    margin-bottom: 10px;
+}
 .lp-paragrap-more {
     float: right;
 }

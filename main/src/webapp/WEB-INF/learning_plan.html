@@ -238,7 +238,9 @@
                                 <a href=""><span class="lp-paragrap-more">more</span></a>
                             <!-- /ko -->
                             <!-- ko if: extraTrainingInfo.descriptionExpanded$() -->
-                                <p class="lp-paragraph-expanded" data-bind="text: extraTrainingInfo.description$()"></p>
+                                <!-- ko foreach: extraTrainingInfo.paragraphs$() -->
+                                    <p class="lp-paragraph-expanded" data-bind="text: $data"></p>
+                                <!-- /ko -->
                             <!-- /ko -->
                         </div>
                         <table class="lp_course_expanded_links">

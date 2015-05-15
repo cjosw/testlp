@@ -89,6 +89,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
 
     var extraTrainingInfo = {
         description$: ko.observable(),
+        paragraphs$: ko.observableArray(),
         descriptionExpanded$: ko.observable(false),
         numCompleted: numCompleted,
         completed: (numCompleted == training_data.LessonUsers.length),
@@ -325,7 +326,7 @@ function loadTrainingPlanDescription(training_data) {
         return;
     }
     if (useDummyTrainingData && training_data.DummyDescription != undefined) {
-        training_data.extraTrainingInfo.description$(training_data.DummyDescription);
+        setupDescription(training_data, training_data.DummyDescription);
         training_data.extraTrainingInfo.hasChatRoom$(true);
         clampTrainingDataDescription(training_data);
         return;
@@ -334,13 +335,13 @@ function loadTrainingPlanDescription(training_data) {
         function(data) {
             var description = data.Description;
             description = description || "";
-            training_data.extraTrainingInfo.description$(description);
+            setupDescription(training_data, description);
             training_data.extraTrainingInfo.hasChatRoom$(data.ChatRoom);
             clampTrainingDataDescription(training_data);
         },
         function(msg) {
             var description = "[ Failed to retrieve course description ]";
-            training_data.extraTrainingInfo.description$(description);
+            setupDescription(description);
         }
     );
 }
@@ -349,21 +350,32 @@ function clampTrainingDataDescription(training_data) {
     var linesToShow = 3;
     training_data.extraTrainingInfo.descriptionExpanded$(false);
     var paragraphs = $('.lp_course_expanded_description .lp-paragraph-shrunk');
-    if (paragraphs) {
-        console.log("Clamping description to 3 lines of text...");
-        var paragraph = paragraphs[0];
-        clamp(paragraph, linesToShow);
-        var paragraphContents = $('.lp_course_expanded_description .lp-paragraph-shrunk span');
-        if (paragraphContents && paragraphContents.length < linesToShow) {
-            // short enough not to need any 'expansion' button; show the 'expanded' version instead!
-            training_data.extraTrainingInfo.descriptionExpanded$(true);
-        } else if (paragraphContents && paragraphContents.length == linesToShow) {
-            var lastVisibleLine = paragraphContents[linesToShow-1];
+    if (!paragraphs) {
+        return;
+    }
+    console.log("Clamping description to " + linesToShow + " lines of text...");
+    var paragraph = paragraphs[0];
+    clamp(paragraph, linesToShow);
+
+    var bigEnoughToNeedTruncation = true;
+    var potentiallyDisplayedParagraphs = training_data.extraTrainingInfo.paragraphs$();
+    if (potentiallyDisplayedParagraphs.length > linesToShow) {
+        bigEnoughToNeedTruncation = true;
+    } else {
+        var spans = $('.lp_course_expanded_description .lp-paragraph-shrunk span');
+        if (spans && spans.length < linesToShow) {
+            bigEnoughToNeedTruncation = false;
+        } else if (spans && spans.length == linesToShow) {
+            var lastVisibleLine = spans[linesToShow - 1];
             if (lastVisibleLine.scrollWidth <= lastVisibleLine.clientWidth) {
                 // didn't actually need truncation
-                training_data.extraTrainingInfo.descriptionExpanded$(true);
+                bigEnoughToNeedTruncation = false;
             }
         }
+    }
+    if (!bigEnoughToNeedTruncation) {
+        // short enough not to need any 'expansion' button; show the 'expanded' version instead
+        training_data.extraTrainingInfo.descriptionExpanded$(true);
     }
 }
 
@@ -373,6 +385,20 @@ function toggleExpandedDescription(training_data) {
     } else {
         training_data.extraTrainingInfo.descriptionExpanded$(true);
     }
+}
+
+function setupDescription(training_data, description) {
+    description = description.replace(/(<p>|<br>|<\/p>)/gi, "\n");
+    var paragraphs = description.split("\n");
+    var toDisplay = [];
+    for (var p = 0; p < paragraphs.length; p++) {
+        var paragraph = paragraphs[p].trim();
+        if (paragraph.length != 0) {
+            toDisplay.push(paragraph);
+        }
+    }
+    training_data.extraTrainingInfo.description$(description);
+    training_data.extraTrainingInfo.paragraphs$(toDisplay);
 }
 
 function openLiveChat(training_data) {
