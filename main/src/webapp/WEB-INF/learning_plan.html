@@ -37,11 +37,14 @@
         <div class="lp_heading_content lp_heading_name_container">
             <table>
                 <tr>
+                    <td class="lp_heading_column">
                     <div class="lp_heading_text_container" data-bind="with: user$">
                         <span>Hi, <span data-bind="text: FirstName"></span></span>
                     </div>
+                    </td>
                 </tr>
                 <tr>
+                    <td>
                     <div class="progress lp_progress_bar_container">
                         <div class="progress-bar lp_progress_bar_background" role="progressbar"
                              aria-valuemin="0" aria-valuemax="100" style="width:100%">
@@ -50,11 +53,14 @@
                             </div>
                         </div>
                     </div>
+                    </td>
                 </tr>
                 <tr>
+                    <td>
                     <span class="lp_heading_summary_container">
                         <span class="pull-right"><span data-bind="text: progress$"></span></span>
                     </span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -103,8 +109,8 @@
                     </td>
                 </tr>
             </table>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <!-- ko if: !category_plan$() || category_plan$().length == 0-->
     <div class="lp_category_section">
