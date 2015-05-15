@@ -38,6 +38,9 @@ if (!Function.prototype.bind) {
 
 // the actual meat is here
 (function(w, d){
+    if (!d.createElement.bind) {
+        return; // old version of IE, doesn't understand bind even with the attempt to create it above
+    }
     var clamp, measure, text, lineWidth,
         lineStart, lineCount, wordStart,
         line, lineText, wasNewLine,
