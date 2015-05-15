@@ -28,6 +28,9 @@ function learning_plan_startup(options) {
     setupKnockoutCustomisations();
     ko.applyBindings(learning_plan);
 
+    if (checkBrowser && !isUsingCompatibleDocumentMode()) {
+        return;
+    }
     loadUser(userId);
     loadTrainingPlan(userId);
 }
@@ -42,6 +45,7 @@ function decodeQueryParams(options) {
     useDummyUser         = decodeBooleanQueryParam(params, "useDummyUser",         options.useDummyUser, "false");
     useRealTrainingData  = decodeBooleanQueryParam(params, "useRealTrainingData",  options.useRealTrainingData, "true");
     useDummyTrainingData = decodeBooleanQueryParam(params, "useDummyTrainingData", options.useDummyTrainingData, "false");
+    checkBrowser         = decodeBooleanQueryParam(params, "checkBrowser",         options.checkBrowser, "true");
 }
 
 function lp_compatibilityWorkarounds() {
