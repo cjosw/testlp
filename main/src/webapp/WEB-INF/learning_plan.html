@@ -63,40 +63,48 @@
     </div>
 
     <div class="lp_filter_bar" data-bind="with: filters">
-        <div class="lp_filter_left_margin">
-        </div>
-        <div class="lp_filter_search">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText$">
-                    <span class="input-group-addon glyphicon glyphicon-search"></span>
-                </div>
-            </div>
-        </div>
-        <div class="lp_filter_categories">
-            <select type="text" class="form-control"
-                    data-bind="value: categoryFilter$,
+        <form class="form-inline">
+            <table>
+                <tr>
+                    <td class="lp_filter_search">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="search" class="form-control" id="inputGroupSuccess1" placeholder="Search..." data-bind="textInput: searchText$">
+                                <div class="input-group-addon">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="lp_filter_categories">
+                        <div class="form-group">
+                            <select type="text" class="form-control"
+                                data-bind="value: categoryFilter$,
                                         options: categoryOptions$,
                                         optionsCaption: 'All Categories'">
-            </select>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="lp_filter_completed">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="lp_filter_checkbox" data-bind="checked: showCompletedCoursesOnly$">
+                                Show completed courses
+                            </label>
+                       </div>
+                    </td>
+                    <td class="lp_filter_online">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" class="lp_filter_checkbox" data-bind="checked: showOnlineCoursesOnly$">
+                                Show online courses only
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
-        <div class="lp_filter_completed">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-bind="checked: showCompletedCoursesOnly$">
-                    Show completed courses
-                </label>
-            </div>
-        </div>
-        <div class="lp_filter_online">
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" data-bind="checked: showOnlineCoursesOnly$">
-                    Show online courses only
-                </label>
-            </div>
-        </div>
-    </div>
+    </form>
 
     <!-- ko if: !category_plan$() || category_plan$().length == 0-->
     <div class="lp_category_section">
