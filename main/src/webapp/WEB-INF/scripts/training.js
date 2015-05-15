@@ -375,20 +375,15 @@ function toggleExpandedDescription(training_data) {
     }
 }
 
-function openLiveChatWindow(training_data) {
+function openLiveChat(training_data) {
     var courseId = training_data.Course.courseId;
-    console.log("About to launch live chat via window; courseId: " + courseId);
-    var url = "student/ChatRooms/ChatRoom.aspx?CourseGuid=" + courseId;
-    launchUrl(url);
-}
-
-function openLiveChatJS(training_data) {
-    var courseId = training_data.Course.courseId;
-    if (OpenChatRoomWindow) {
+    if (window.OpenChatRoomWindow) {
         console.log("About to launch live chat using JS; courseId: " + courseId);
         OpenChatRoomWindow(rootUIUrl, courseId, "");
     } else {
-        console.log("About to launch live chat using JS; but OpenChatRoomWindow not defined; courseId: " + courseId);
+        console.log("About to launch live chat via window; courseId: " + courseId);
+        var url = "student/ChatRooms/ChatRoom.aspx?CourseGuid=" + courseId;
+        launchUrl(url);
     }
 }
 
