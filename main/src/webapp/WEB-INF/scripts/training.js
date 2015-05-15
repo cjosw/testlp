@@ -95,6 +95,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         isOnline: isOnline,
         blank: false,
         ratingStars: [0,0,0,0,0],
+        hasChatRoom$: ko.observable(false),
         expanded$: ko.observable(false)
     };
     training_data.extraTrainingInfo = extraTrainingInfo;
@@ -325,6 +326,7 @@ function loadTrainingPlanDescription(training_data) {
     }
     if (useDummyTrainingData && training_data.DummyDescription != undefined) {
         training_data.extraTrainingInfo.description$(training_data.DummyDescription);
+        training_data.extraTrainingInfo.hasChatRoom$(true);
         clampTrainingDataDescription(training_data);
         return;
     }
@@ -333,6 +335,7 @@ function loadTrainingPlanDescription(training_data) {
             var description = data.Description;
             description = description || "";
             training_data.extraTrainingInfo.description$(description);
+            training_data.extraTrainingInfo.hasChatRoom$(data.ChatRoom);
             clampTrainingDataDescription(training_data);
         },
         function(msg) {
@@ -372,6 +375,23 @@ function toggleExpandedDescription(training_data) {
     }
 }
 
+function openLiveChatWindow(training_data) {
+    var courseId = training_data.Course.courseId;
+    console.log("About to launch live chat via window; courseId: " + courseId);
+    var url = "student/ChatRooms/ChatRoom.aspx?CourseGuid=" + courseId;
+    launchUrl(url);
+}
+
+function openLiveChatJS(training_data) {
+    var courseId = training_data.Course.courseId;
+    if (OpenChatRoomWindow) {
+        console.log("About to launch live chat using JS; courseId: " + courseId);
+        OpenChatRoomWindow(rootUIUrl, courseId, "");
+    } else {
+        console.log("About to launch live chat using JS; but OpenChatRoomWindow not defined; courseId: " + courseId);
+    }
+}
+
 function bookLessonUser(lessonUser) {
     var lessonId = lessonUser.Lesson.lessonId;
     var courseId = lessonUser.extraLessonInfo.parentTrainingData.Course.courseId;
@@ -383,6 +403,10 @@ function bookLessonUser(lessonUser) {
         console.log("About to launch course booking; lessonId: " + lessonId + "; courseId: " + courseId);
         url = 'PortalLink.aspx?PortalSection=LearningPlan&PortalPage=LearningEventList&CourseGuid='+courseId+'&LearningObjectGuid=' + lessonId;
     }
+    launchUrl(url);
+}
+
+function launchUrl(url) {
     console.log("Launching URL: " + url);
     console.log("Full URL: " + rootUIUrl + url);
     window.open(rootUIUrl + url,

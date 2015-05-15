@@ -226,12 +226,23 @@
                         </div>
                         <table class="lp_course_expanded_links">
                             <tr>
-                            <td class="lp_course_expanded_link">
-                                <a href="#"><span class="glyphicon glyphicon-new-window"></span> Live chat</a>
-                            </td>
-                            <td class="lp_course_expanded_links">
-                                <a href="#"><span class="glyphicon glyphicon-new-window"></span> Community chat</a>
-                            </td>
+                                <td class="lp_course_expanded_link">
+                                    <!-- ko if: extraTrainingInfo.hasChatRoom$() -->
+                                    <a href="#" data-bind="click: openLiveChatWindow">
+                                        <span class="glyphicon glyphicon-new-window"></span> Live chat
+                                    </a>
+                                    <!-- /ko -->
+                                    <!-- ko if: !extraTrainingInfo.hasChatRoom$() -->
+                                    <span class="lp_course_expanded_link_disabled">
+                                        <span class="glyphicon glyphicon-new-window"></span> Live chat
+                                    </span>
+                                    <!-- /ko -->
+                                </td>
+                                <td class="lp_course_expanded_link">
+                                    <span class="lp_course_expanded_link_disabled">
+                                        <span class="glyphicon glyphicon-new-window"></span> Community chat
+                                    </span>
+                                </td>
                             </tr>
                         </table>
                         <!-- ko foreach: LessonUsers -->

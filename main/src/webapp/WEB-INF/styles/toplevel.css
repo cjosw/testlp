@@ -238,6 +238,9 @@ img.lp_heading_content {
     padding-left: 10px;
     padding-right: 20px;
 }
+.lp_course_expanded_link_disabled {
+    font-style: italic;
+}
 .lp_course_expanded_lessons {
 }
 .lp_course_expanded_lesson {
