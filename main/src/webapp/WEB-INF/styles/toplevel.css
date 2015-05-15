@@ -17,7 +17,7 @@
     height: 100%;
 }
 .lp_heading_left_margin, .lp_filter_left_margin {
-    width: 5%;
+    width: 4%;
     height: 1px;
     float: left;
 }
@@ -84,7 +84,7 @@ img.lp_heading_content {
     float: left;
 }
 .lp_filter_categories {
-    margin-left: 7%;
+    margin-left: 9%;
     width: 18%;
     float: left;
 }
@@ -103,12 +103,12 @@ img.lp_heading_content {
 .lp_error_message {
     color: orangered;
     padding-top: 10px;
-    padding-left: 5%;
+    padding-left: 4%;
     padding-bottom: 10px;
 }
 .lp_category_section_header {
     padding-top: 20px;
-    padding-left: 5%;
+    padding-left: 4%;
     padding-bottom: 10px;
     font-size: large;
 }
@@ -116,15 +116,17 @@ img.lp_heading_content {
     width: 100%;
 }
 .lp_course_column {
-    width: 16%;
+    width: 15.33%; /* 4% margin, 6 columns of 15.33%, 4% margin, total = 100% */
+}
+.lp_course_margin_column {
+    width: 4%;
 }
 .lp_course_table {
     text-align: center;
-    margin: auto;
 }
 .lp_course_summary_image {
     max-height: 200px;
-    max-width: 150px;
+    max-width: 135px;
     margin-top: 15px;
     margin-bottom: 15px;
 }
@@ -133,7 +135,7 @@ img.lp_heading_content {
     font-weight: bold;
 }
 .lp_truncate {
-    max-width: 150px;
+    max-width: 140px;
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
