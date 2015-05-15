@@ -89,8 +89,8 @@ img.lp_heading_content {
     width: 24%;
 }
 .lp_filter_completed, .lp_filter_online {
-    padding-left: 2%;
-    width: 18%;
+    padding-left: 1%;
+    width: 19%;
     font-size: smaller;
 }
 input[type="checkbox"].lp_filter_checkbox {

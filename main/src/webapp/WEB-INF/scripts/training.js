@@ -190,7 +190,7 @@ function filterListByUIFields(training_data_list, filters) {
 }
 
 function trainingDataMatchesFilter(training_data, filters) {
-    if (filters.showCompletedCoursesOnly$() && !training_data.extraTrainingInfo.completed) {
+    if (filters.showIncompleteCoursesOnly$() && training_data.extraTrainingInfo.completed) {
         return false;
     }
     if (filters.showOnlineCoursesOnly$() && !training_data.extraTrainingInfo.isOnline) {

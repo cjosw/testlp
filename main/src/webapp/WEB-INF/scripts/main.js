@@ -12,7 +12,7 @@ function LearningPlanViewModel() {
         searchText$: ko.observable(),
         categoryFilter$: ko.observable(),
         categoryOptions$: ko.observable(),
-        showCompletedCoursesOnly$: ko.observable(false),
+        showIncompleteCoursesOnly$: ko.observable(false),
         showOnlineCoursesOnly$: ko.observable(false)
     };
 
