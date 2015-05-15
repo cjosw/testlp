@@ -95,10 +95,13 @@ img.lp_heading_content {
 }
 input[type="checkbox"].lp_filter_checkbox {
     vertical-align: middle;
-    margin-top: 0;
+    margin-top: 2px; /* this is needed because of quirks of bootstrap within Kallidus's portal, adjusts sizing */
 }
 .lp_filter_bar * .checkbox {
     min-height: 0;
+}
+.lp_filter_bar * .form-group {
+    margin-bottom: 0; /* this is needed because of quirks of bootstrap within Kallidus's portal, adjusts sizing */
 }
 .lp_category_section, .lp_error_section {
     clear: both;
