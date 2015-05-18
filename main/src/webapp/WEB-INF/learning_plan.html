@@ -235,7 +235,7 @@
                         <div class="lp_course_expanded_description" data-bind="click: toggleExpandedDescription">
                             <!-- ko if: !extraTrainingInfo.descriptionExpanded$() -->
                                 <p class="lp-paragraph-shrunk" data-bind="text: extraTrainingInfo.description$()"></p>
-                                <a href=""><span class="lp-paragrap-more">more</span></a>
+                                <a href=""><span class="lp-paragraph-more">more</span></a>
                             <!-- /ko -->
                             <!-- ko if: extraTrainingInfo.descriptionExpanded$() -->
                                 <!-- ko foreach: extraTrainingInfo.paragraphs$() -->
@@ -312,7 +312,7 @@
     <!-- /ko -->
 
     <!--
-    We have a blank footer row because it makes the sligein/slideout functionality work better;
+    We have a blank footer row because it makes the slidein/slideout functionality work better;
     otherwise it can magically appear below the bottom of the currently visible screen.
      -->
     <div class="lp_footer_bar">
