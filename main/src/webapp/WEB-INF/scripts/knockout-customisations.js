@@ -20,15 +20,15 @@ function setupKnockoutCustomisations() {
             animationClassname = "se-fully-visible";
             elementFullyVisible = function() {
                 $(element).addClass(animationClassname);
-                //if (!isElementInViewport(element)) {
-                //    scrollToElement(element);
-                //}
+                if (!isElementInViewport(element)) {
+                    scrollToElement(element);
+                }
             };
             elementFullyHidden = function() {
                 $(element).removeClass(animationClassname);
             };
             value = ko.utils.unwrapObservable(valueAccessor());
-            defaultDuration = 400;
+            defaultDuration = 100;
             if (value) {
                 $(element).slideDown(defaultDuration, elementFullyVisible);
             } else {
@@ -41,7 +41,11 @@ function setupKnockoutCustomisations() {
 function scrollToElement(element) {
     var el = $(element);
     if (el.length > 0) {
-        el[0].scrollIntoView({block: "start", behavior: "smooth"});
+        var rect = element.getBoundingClientRect();
+        var height = rect.bottom - rect.top;
+        // If the expanded pane is too big, scroll to its top, otherwise scroll to its bottom
+        var makeTopVisible = height > (window.innerHeight || document.documentElement.clientHeight);
+        el[0].scrollIntoView(makeTopVisible);
     }
 }
 

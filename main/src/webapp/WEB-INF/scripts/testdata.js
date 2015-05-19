@@ -1,7 +1,11 @@
 function getTestTrainingData() {
     var training_data_list = [];
-    for (var i = 0; i < (coursesPerRow+2); i++) {
+    var i = 0;
+    for (i = 0; i < (coursesPerRow+2); i++) {
         training_data_list.push(getTrainingData("Agile Development", i))
+    }
+    for (; i < (coursesPerRow+4); i++) {
+        training_data_list.push(getTrainingData("Scroll Development", i))
     }
     return training_data_list;
 }

@@ -65,7 +65,7 @@ if (!Function.prototype.bind) {
         wasNewLine = false;
         lineWidth = el.clientWidth;
         // get all the text, remove any line changes
-        text = (el.textContent || el.innerText).replace(/\n/g, ' ');
+        text = (el.textContent || el.innerText || "").replace(/\n/g, ' ');
         // remove all content
         while(el.firstChild !== null)
             el.removeChild(el.firstChild);
