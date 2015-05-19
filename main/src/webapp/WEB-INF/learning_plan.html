@@ -294,6 +294,11 @@
                                             <span class="glyphicon glyphicon-play"></span> In Progress
                                         </button>
                                     <!-- /ko -->
+                                    <!-- ko if: extraLessonInfo.visibleStatus == VisibleStatuses.ONLINE_COMPLETED -->
+                                        <button type="button" class="btn btn-sm lp_course_bookable_btn" data-bind="click: bookLessonUser">
+                                            <span class="glyphicon glyphicon-ok"></span> Completed
+                                        </button>
+                                    <!-- /ko -->
                                     <!-- Other possibles are 'NOBUTTON', and 'UNKNOWN'. In either case, show nothing. -->
                                 </td>
                             </tr>

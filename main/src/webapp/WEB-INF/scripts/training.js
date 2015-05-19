@@ -117,7 +117,7 @@ function categoriseStatus(status, categoriesedLessonType, lessonUser) {
         case LearningRecordStatuses.Cancelled:
             return VisibleStatuses.CANCELLED;
         case LearningRecordStatuses.Complete:
-            return VisibleStatuses.COMPLETED;
+            return isOnline ? VisibleStatuses.ONLINE_COMPLETED : VisibleStatuses.COMPLETED;
         case LearningRecordStatuses.NotStarted:
             return isOnline ? VisibleStatuses.ONLINE_NOT_STARTED : (isLessonEventBooked(lessonUser) ? VisibleStatuses.BOOKED : VisibleStatuses.AVAILABLE_TO_BOOK);
         case null:
@@ -479,7 +479,8 @@ VisibleStatuses = {
     COMPLETED: 4,
     CANCELLED: 5,
     NOBUTTON: 6,
-    UNKNOWN: 7
+    ONLINE_COMPLETED: 7,
+    UNKNOWN: 999
 };
 
 LessonTypes = {
