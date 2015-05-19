@@ -139,7 +139,7 @@
             <span data-bind="text: categoryName"></span>
             <!-- /ko -->
             <!-- ko if: !categoryName -->
-            [ No category ]
+            <span data-bind="text: UnknownCategoryName"></span>
             <!-- /ko -->
         </div>
         <!-- ko foreach: training_data_rows -->

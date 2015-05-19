@@ -167,7 +167,7 @@ function getCategoryNamesForFilter(training_data_list) {
     var categoryNames = [];
     for (var categoryName in arrayByCategoryName) {
         if (categoryName == "") {
-            categoryNames.push("No category");
+            categoryNames.push(UnknownCategoryName);
         } else {
             categoryNames.push(categoryName);
         }
@@ -198,7 +198,7 @@ function trainingDataMatchesFilter(training_data, filters) {
         return false;
     }
     if (filters.categoryFilter$()) {
-        if (filters.categoryFilter$() == "No category") {
+        if (filters.categoryFilter$() == UnknownCategoryName) {
             if (training_data.CourseCategory != null) {
                 return false;
             }
@@ -353,7 +353,6 @@ function clampTrainingDataDescription(training_data) {
     if (!paragraphs) {
         return;
     }
-    console.log("Clamping description to " + linesToShow + " lines of text...");
     var paragraph = paragraphs[0];
     clamp(paragraph, linesToShow);
 
@@ -506,4 +505,6 @@ CategorisedLessonTypes = {
     ONLINE: 0,
     CLASSROOM: 1,
     UNKNOWN: 2
-}
+};
+
+UnknownCategoryName = "Other";
