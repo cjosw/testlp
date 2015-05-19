@@ -33,6 +33,15 @@ function learning_plan_startup(options) {
     }
     loadUser(userId);
     loadTrainingPlan(userId);
+
+    if (preloadCourses) {
+        learning_plan.initial_plan$.subscribe( function(initial_plan) {
+            var delay_ms = 10; // Wait a very slight delay before pre-loading to allow the UI to render
+            setTimeout(function() {
+                loadAndProcessCourses(initial_plan);
+            }, delay_ms);
+        });
+    }
 }
 
 function decodeQueryParams(options) {
@@ -46,6 +55,7 @@ function decodeQueryParams(options) {
     useRealTrainingData  = decodeBooleanQueryParam(params, "useRealTrainingData",  options.useRealTrainingData, "true");
     useDummyTrainingData = decodeBooleanQueryParam(params, "useDummyTrainingData", options.useDummyTrainingData, "false");
     checkBrowser         = decodeBooleanQueryParam(params, "checkBrowser",         options.checkBrowser, "true");
+    preloadCourses       = decodeBooleanQueryParam(params, "preloadCourses",       options.preloadCourses, "true");
 }
 
 function lp_compatibilityWorkarounds() {

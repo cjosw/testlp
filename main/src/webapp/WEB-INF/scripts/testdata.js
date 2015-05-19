@@ -17,7 +17,8 @@ function getTrainingData(categoryName, num) {
                 ShowBestScoreOnLearningPlan: true,
                 BestStatus: null,
                 Lesson: {
-                    Title: "Lesson A",
+                    Title: "Lesson A pqr",
+                    Description: "Lesson A with extra text: " + (num + 7),
                     Id: "course-" + num + "-lesson-a-guid",
                     Type: lessonType
                 }
@@ -26,7 +27,8 @@ function getTrainingData(categoryName, num) {
                 ShowBestScoreOnLearningPlan: true,
                 BestStatus: null,
                 Lesson: {
-                    Title: "Lesson B",
+                    Title: "Lesson B xyz",
+                    Description: "Banana",
                     Id: "course-" + num + "-lesson-b-guid",
                     Type: lessonType
                 }
@@ -36,13 +38,16 @@ function getTrainingData(categoryName, num) {
                 BestStatus: null,
                 Lesson: {
                     Title: "Lesson C",
+                    Description: "Zoo keeper",
                     Id: "course-" + num + "-lesson-c-guid",
                     Type: lessonType
                 }
             }
         ],
         PrerequisitesMet: true,
-        DummyDescription: "<p>Call me Ishmael. "+
+        DummyCourseData: {
+            ChatRoom: true,
+            Description: "<p>Call me Ishmael. " +
             "Some years ago - never mind how long precisely - having little or no money in my purse, "+
             "and nothing particular to interest me on shore, "+
             "I thought I would sail about a little and see the watery part of the world.<br> "+
@@ -60,6 +65,7 @@ function getTrainingData(categoryName, num) {
             "I quietly take to the ship. There is nothing surprising in this. "+
             "If they but knew it, almost all men in their degree, some time or other, "+
             "cherish very nearly the same feelings towards the ocean with me.</p>"
+        }
         ,
         Status: "Not started"
     };
@@ -67,13 +73,13 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.NotStarted;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Cancelled;
-        training_data.DummyDescription = "";
+        training_data.DummyCourseData.Description = "";
         training_data.Course.Summary = "Course 1, no description";
     }
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
-        training_data.DummyDescription = "This is a short description";
+        training_data.DummyCourseData.Description = "This is a short description";
         training_data.Course.Summary = "Course 2 (online) with short description";
     }
     if (num == 3) {
@@ -81,7 +87,7 @@ function getTrainingData(categoryName, num) {
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Complete;
         training_data.Course.Summary = "Course 3 (completed) which is a very long name which needs truncating";
-        training_data.DummyDescription = "Call me Ishmael. "+
+        training_data.DummyCourseData.Description = "Call me Ishmael. "+
             "Some years ago - never mind how long precisely - having little or no money in my purse, "+
             "and nothing particular to interest me on shore, "+
             "I thought I would sail about a little and see the watery part of the world.";
@@ -97,8 +103,9 @@ function getTrainingData(categoryName, num) {
         training_data.PrerequisitesMet = false;
     }
     if (num == 7) {
+        training_data.LessonUsers[0].Lesson.Description = "Babbage";
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
-        training_data.DummyDescription = "Description line 1. <br>"+
+        training_data.DummyCourseData.Description = "Description line 1. <br>"+
             "Description line 2. <br>"+
             "Description line 3. <br>"+
             "Description line 4. ";
