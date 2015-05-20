@@ -69,22 +69,28 @@ function getTrainingData(categoryName, num) {
             "I quietly take to the ship. There is nothing surprising in this. "+
             "If they but knew it, almost all men in their degree, some time or other, "+
             "cherish very nearly the same feelings towards the ocean with me.</p>"
+            ,Code: "DUMMY-COURSE-" + num
         }
         ,
         Status: "Not started"
     };
+    if (num == 0) {
+        training_data.DummyCourseData.Code = "ExampleCourseImageBlue";
+    }
     if (num == 1) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.NotStarted;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Cancelled;
         training_data.DummyCourseData.Description = "";
         training_data.Course.Summary = "Course 1, no description";
+        training_data.DummyCourseData.Code = "ExampleCourseImageContentMarketing";
     }
     if (num == 2) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.Incomplete;
         training_data.DummyCourseData.Description = "This is a short description";
         training_data.Course.Summary = "Course 2 (online) with short description";
+        training_data.DummyCourseData.Code = "ExampleCourseImageECommerce";
     }
     if (num == 3) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Complete;
@@ -95,16 +101,19 @@ function getTrainingData(categoryName, num) {
             "Some years ago - never mind how long precisely - having little or no money in my purse, "+
             "and nothing particular to interest me on shore, "+
             "I thought I would sail about a little and see the watery part of the world.";
+        training_data.DummyCourseData.Code = "ExampleCourseImageFinance";
     }
     if (num == 4) {
         training_data.LessonUsers[0].BestStatus = LearningRecordStatuses.Failed;
         training_data.LessonUsers[1].BestStatus = LearningRecordStatuses.DidNotAttend;
         training_data.LessonUsers[2].BestStatus = LearningRecordStatuses.Withdrawn;
         training_data.Course.Summary = "Course 4 (online) with odd statuses";
+        training_data.DummyCourseData.Code = "ExampleCourseImageHTML5";
     }
     if (num == 5) {
         training_data.Course.Summary = "Course 5 (Prerequisites not met)";
         training_data.PrerequisitesMet = false;
+        training_data.DummyCourseData.Code = "ExampleCourseImage/SEO";
     }
     if (num == 7) {
         training_data.LessonUsers[0].Lesson.Description = "Babbage";
@@ -119,11 +128,11 @@ function getTrainingData(categoryName, num) {
 
 function getDummyCourseImageName(num) {
     switch (num % 6) {
-        case 0: return "images/ExampleCourseImageBlue.png";
-        case 1: return "images/ExampleCourseImageContentMarketing.png";
-        case 2: return "images/ExampleCourseImageECommerce.png";
-        case 3: return "images/ExampleCourseImageFinance.png";
-        case 4: return "images/ExampleCourseImageHTML5.png";
-        case 5: return "images/ExampleCourseImageSEO.png";
+        case 0: return "ExampleCourseImageBlue.png";
+        case 1: return "ExampleCourseImageContentMarketing.png";
+        case 2: return "ExampleCourseImageECommerce.png";
+        case 3: return "ExampleCourseImageFinance.png";
+        case 4: return "ExampleCourseImageHTML5.png";
+        case 5: return "ExampleCourseImageSEO.png";
     }
 }

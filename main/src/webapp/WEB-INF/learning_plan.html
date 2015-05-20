@@ -154,11 +154,11 @@
                                         <td>
                                             <!-- ko if: PrerequisitesMet -->
                                             <a href="#" data-bind="click: expandTrainingData">
-                                                <img class="lp_course_summary_image" data-bind="src: imageName">
+                                                <img class="lp_course_summary_image" data-bind="src: extraTrainingInfo.imageName$()">
                                             </a>
                                             <!-- /ko -->
                                             <!-- ko if: !PrerequisitesMet -->
-                                                <img class="lp_course_summary_image" data-bind="src: imageName">
+                                                <img class="lp_course_summary_image" data-bind="src: extraTrainingInfo.imageName$()">
                                             <!-- /ko -->
                                         </td>
                                     </tr>
@@ -214,7 +214,7 @@
             <tr class="lp_course_expanded_container" data-bind="with: current_training$()">
                 <td class="lp_course_expanded_image_box">
                     <div class="pull-right">
-                        <img class="lp_course_expanded_image" data-bind="src: imageName">
+                        <img class="lp_course_expanded_image" data-bind="src: extraTrainingInfo.imageName$()">
                     </div>
                 </td>
                 <td class="lp_course_expanded_text_box">

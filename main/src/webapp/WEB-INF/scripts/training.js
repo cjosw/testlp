@@ -62,7 +62,6 @@ function compareTrainingByCategoryName(training_data_a, training_data_b) {
 function updateStaticDataOnTrainingPlans(training_data_list) {
     training_data_list.forEach(function(training_data, index) {
         updateStaticDataOnTrainingPlan(training_data);
-        training_data.imageName = rootContentUrl + getDummyCourseImageName(index);
     });
 }
 
@@ -97,6 +96,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         isOnline: isOnline,
         blank: false,
         ratingStars: [0,0,0,0,0],
+        imageName$: ko.observable(rootContentUrl + LPImagesDir + LPDefaultCourseImageName),
         hasChatRoom$: ko.observable(false),
         expanded$: ko.observable(false)
     };
@@ -354,7 +354,7 @@ function loadAndProcessCourse(training_data, success_fn) {
         success_fn(training_data);
         return;
     }
-    loadCourse(training_data.Course.courseId,
+    loadCourse(training_data.Course.courseId, training_data.Course.Summary,
         function(data) {
             loadedCourseOK(training_data, data);
             success_fn(training_data);
@@ -373,6 +373,7 @@ function isDummyTrainingData(training_data) {
 function loadedCourseOK(training_data, course) {
     var description = course.Description || "";
     setupDescription(training_data, description);
+    setupImageName(training_data, course);
     training_data.extraTrainingInfo.hasChatRoom$(course.ChatRoom);
     training_data.extraTrainingInfo.courseLoaded = true;
 }
@@ -429,6 +430,30 @@ function setupDescription(training_data, description) {
     }
     training_data.extraTrainingInfo.description$(description);
     training_data.extraTrainingInfo.paragraphs$(toDisplay);
+}
+
+function setupImageName(training_data, course) {
+    var courseCode = course.Code;
+    if (courseCode) {
+        var cleanedCode = courseCode.replace(/\\|\/|:|\*|\?|<|>|\||\[|\]/g, "");
+        var imageName = rootContentUrl + LPImagesDir + cleanedCode + ".png";
+        useImageIfExists(training_data, imageName);
+    }
+}
+
+function useImageIfExists(training_data, imageName) {
+    var nImg = document.createElement('img');
+    nImg.onload = function() {
+        // image exists and is loaded, so we can use it for the main page
+        training_data.extraTrainingInfo.imageName$(imageName);
+    };
+    nImg.onerror = function() {
+        // image did not load
+        console.log("training_data; course: " + training_data.Course.Summary +
+            "; image not found: " + imageName + "; so leaving as default image: " +
+            training_data.extraTrainingInfo.imageName$());
+    };
+    nImg.src = imageName;
 }
 
 function openLiveChat(training_data) {
@@ -540,3 +565,5 @@ CategorisedLessonTypes = {
 };
 
 UnknownCategoryName = "Other";
+LPImagesDir = "images/";
+LPDefaultCourseImageName = "DefaultCourseImage.png";

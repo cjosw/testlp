@@ -1,4 +1,4 @@
-function loadCourse(courseId, successFn, errorFn) {
-    console.log("Loading courseId: " + courseId + " ...");
+function loadCourse(courseId, courseName, successFn, errorFn) {
+    console.log("Loading courseId: " + courseId + " (" + courseName + ") ...");
     invokeAjax(rootAPIUrl + 'courses/' + courseId, successFn, errorFn);
 }
