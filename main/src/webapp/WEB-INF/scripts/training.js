@@ -83,7 +83,7 @@ function updateStaticDataOnTrainingPlan(training_data) {
         lessonUser.extraLessonInfo = extraLessonInfo;
         lessonUser.Lesson.lessonId = getTrailingGuid(lessonUser.Lesson.Id);
         isOnline = isOnline || isLessonOnline;
-        if (extraLessonInfo.visibleStatus == VisibleStatuses.COMPLETED) { numCompleted++; }
+        if (status == LearningRecordStatuses.Complete) { numCompleted++; }
     }
 
     var extraTrainingInfo = {
